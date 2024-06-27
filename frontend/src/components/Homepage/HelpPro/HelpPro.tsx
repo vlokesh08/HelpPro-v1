@@ -1,4 +1,3 @@
-import React from "react";
 import HelpProSearch from "./HelpProSearch";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../ui/button";
@@ -19,7 +18,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import AddHelpProProject from "@/components/NewProject/HelpProProject/AddHelpProProject";
 const HelpPro = () => {
 
   const user = localStorage.getItem("user") || "{}";

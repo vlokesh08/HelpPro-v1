@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input } from "../../ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import BountyCheck from "../BountyCheck";
 import BountyValue from "./BountyValue";
 import { Button } from "../../ui/button";
-import Issues from "../Issues";
 import { useNavigate } from "react-router-dom";
 import MultiSelect from "../MultiSelect";
 import axios from "axios";
@@ -52,7 +51,7 @@ const AddHelpProProject = () => {
     console.log(title,description,bountyValue,isChecked,githubLink, endDate);
     // make a post request to the backend
     try {
-      const res = axios.post(
+      axios.post(
         `${BACKEND_URL}/api/v1/project/create`,
         {
           title,

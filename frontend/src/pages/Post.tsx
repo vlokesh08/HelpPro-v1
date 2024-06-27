@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "@/components/Navbar/Navbar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import EditPost from "@/components/Operations/EditPost";
@@ -62,7 +57,6 @@ const Post: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
-  const navigate = useNavigate();
   const [techStack, setTechStack] = useState<string[]>([]);
   const user: string = localStorage.getItem("user") || "{}";
   const user_id = JSON.parse(user).id;
