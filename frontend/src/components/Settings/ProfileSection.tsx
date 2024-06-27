@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Input } from "../ui/input";
 import axios from "axios";
 import { Textarea } from "../ui/textarea";
-import { set } from "date-fns";
 import { Button } from "../ui/button";
 
 interface User {
@@ -18,7 +17,7 @@ const ProfileSection = () => {
   const user = localStorage.getItem("user");
   const userObj = JSON.parse(user as string);
   const userId = userObj.id;
-  const [userData, setUserData] = React.useState<User>({});
+  const [userData, setUserData] = React.useState<User>({} as User);
   const [username, setUsername] = React.useState<string>('');
     const [name, setName] = React.useState<string>('');
     const [bio, setBio] = React.useState<string>('');
@@ -27,7 +26,7 @@ const ProfileSection = () => {
     const fetchData = async () => {
       try {
         const data = await axios.get(`${BACKEND_URL}/api/v1/user/${userId}`);
-        console.log(data);
+        console.log(userData);
         setUserData(data.data[0]);
         setUsername(data.data[0].username);
         setName(data.data[0].name);

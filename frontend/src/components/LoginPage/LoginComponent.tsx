@@ -1,14 +1,4 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -49,6 +39,20 @@ const LoginComponent = ({ isChecked }: any) => {
   return (
     <div>
       <Toaster />
+      <div>
+        {
+          loading === true ? <div className="text-center text-sm text-gray-600 cursor-pointer">
+          <p className="flex gap-2">
+            <p
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
+              <Loader2 className="w-4 mr-3 h-4 animate-spin" />
+              Please wait
+            </p>
+          </p>
+        </div> : null
+        }
+      </div>
       <div className="font-spacegotesk">
       <h1 className="text-5xl font-bold mb-6 font-spacegotesk">Welcome back!</h1>
         <div className="my-1">

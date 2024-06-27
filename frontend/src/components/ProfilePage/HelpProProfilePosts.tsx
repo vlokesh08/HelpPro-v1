@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { Button } from '../ui/button'
-import EditProject from '../Operations/EditProject'
 
 const HelpProProfilePosts = () => {
   const [posts, setPosts] = React.useState([])

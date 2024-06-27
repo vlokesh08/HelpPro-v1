@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
@@ -6,7 +6,7 @@ import BountyCheck from '../NewProject/BountyCheck';
 import MultiSelect from '../NewProject/MultiSelect';
 import { Button } from '../ui/button';
 import axios from 'axios';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 
 interface Post {
   id: string;

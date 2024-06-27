@@ -26,7 +26,7 @@ const Temp = () => {
     const user = localStorage.getItem("user");
     const userObj = JSON.parse(user as string);
     const userId = userObj.id;
-    const [userData, setUserData] = React.useState<User>({});
+    const [userData, setUserData] = React.useState<User>({} as User);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,21 +41,6 @@ const Temp = () => {
 
         fetchData();
     }, []);
-
-  const courses = [
-    {
-      image: "https://via.placeholder.com/100",
-      title: "How to share your files",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit donec ullamcorper...",
-    },
-    {
-      image: "https://via.placeholder.com/100",
-      title: "How to keep your files safe",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit donec ullamcorper...",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-[#212c3c] dark:text-white">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input } from "../ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import BountyCheck from "./BountyCheck";
@@ -47,7 +47,7 @@ const AddNewProjectComponent = () => {
 
     // make a post request to the backend
     try {
-      const res = axios.post(
+      axios.post(
         `${BACKEND_URL}/api/v1/post/create`,
         {
           title,

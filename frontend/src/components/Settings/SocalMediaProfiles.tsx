@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 const SocalMediaProfiles = () => {
   const [githubLink, setGithub] = React.useState<string>("");

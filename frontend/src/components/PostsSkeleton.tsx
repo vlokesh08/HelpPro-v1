@@ -1,13 +1,6 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
 import { Skeleton } from "@/components/ui/skeleton"
 
-import { useNavigate } from 'react-router-dom'
 const PostsSkeleton = () => {
-  const [posts, setPosts] = React.useState([])
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const navigate = useNavigate()
-
 
   const skeletonTemplates = [];
   for (let i = 0; i < 5; i++) {

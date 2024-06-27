@@ -3,7 +3,6 @@ import SignupComponent from "@/components/LoginPage/SignupComponent";
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import image from "../../public/images/signup.jpg";
 const GITHUB_CLIENT_ID = "Ov23ct6yKrCQOfjkoGQP";
 const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
 import { Toaster, toast } from "sonner";
@@ -24,6 +23,7 @@ const Login = () => {
 
       if (code) {
         setLoading(true);
+        console.log(isClicked)
         const response = await axios.post(
           `${BACKEND_URL}/api/v1/auth/githublogin`,
           {
