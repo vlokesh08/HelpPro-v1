@@ -1,58 +1,38 @@
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  Cloud,
-  CreditCard,
   Github,
-  Keyboard,
-  LifeBuoy,
   LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
   Settings,
   User,
-  UserPlus,
-  Users,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-  import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-    CommandSeparator,
-    CommandShortcut,
-  } from "@/components/ui/command"
-import { Input } from "../ui/input";
-import Search from "./Search";
 import ThemeToggle from "../ThemeToggle";
 import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const user = localStorage.getItem("user");
+  const userObj = JSON.parse(user || "{}");
+  const profilePic = userObj.profilePic;
 
   const handleProfile = () => {
     navigate("/profile")
+  };
+
+  const handleSettings = () => {
+    navigate("/settings")
   };
 
   const handleLogout = () => {
@@ -62,12 +42,12 @@ const Navbar = () => {
   };
 
   return (
-    <header className={`flex w-full items-center bg-white dark:bg-dark`}>
+    <header className={`flex w-full items-center bg-white dark:bg-[#29394c]`}>
       <div className="container">
         <div className="relative -mx-4 flex items-center justify-between">
           <div className="w-60 max-w-full px-4">
             <a href="/" className="block w-full py-5">
-              <h1 className=" font-semibold text-lg">OpenSourceSaga</h1>
+              <h1 className=" font-bold text-xl text-[#3a86ff] dark:text-white">HelpPro</h1>
             </a>
           </div>
           <div className="flex w-full items-center justify-between px-4">
@@ -90,7 +70,6 @@ const Navbar = () => {
                   !open && "hidden"
                 } `}
               >
-                <Search />
               </nav>
             </div>
             <div className="hidden  justify-end pr-16 sm:flex lg:pr-0">
@@ -98,7 +77,7 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage src={profilePic || "https://github.com/shadcn.png"} />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
@@ -111,70 +90,21 @@ const Navbar = () => {
                       <span>Profile</span>
                       <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <CreditCard className="mr-2 h-4 w-4" />
-                      <span>Billing</span>
-                      <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    
+                    <DropdownMenuItem onClick={handleSettings}>
                       <Settings className="mr-2 h-4 w-4" />
                       <span>Settings</span>
                       <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Keyboard className="mr-2 h-4 w-4" />
-                      <span>Keyboard shortcuts</span>
-                      <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                    </DropdownMenuItem>
+                    
                   </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                      <Users className="mr-2 h-4 w-4" />
-                      <span>Team</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSub>
-                      <DropdownMenuSubTrigger>
-                        <UserPlus className="mr-2 h-4 w-4" />
-                        <span>Invite users</span>
-                      </DropdownMenuSubTrigger>
-                      <DropdownMenuPortal>
-                        <DropdownMenuSubContent>
-                          <DropdownMenuItem>
-                            <Mail className="mr-2 h-4 w-4" />
-                            <span>Email</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <MessageSquare className="mr-2 h-4 w-4" />
-                            <span>Message</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <PlusCircle className="mr-2 h-4 w-4" />
-                            <span>More...</span>
-                          </DropdownMenuItem>
-                        </DropdownMenuSubContent>
-                      </DropdownMenuPortal>
-                    </DropdownMenuSub>
-                    <DropdownMenuItem>
-                      <Plus className="mr-2 h-4 w-4" />
-                      <span>New Team</span>
-                      <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
+                  
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <Github className="mr-2 h-4 w-4" />
                     <span>GitHub</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <LifeBuoy className="mr-2 h-4 w-4" />
-                    <span>Support</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem disabled>
-                    <Cloud className="mr-2 h-4 w-4" />
-                    <span>API</span>
-                  </DropdownMenuItem>
+                  
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />

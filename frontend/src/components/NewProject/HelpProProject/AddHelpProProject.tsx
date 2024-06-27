@@ -1,20 +1,25 @@
 import React, { useState } from "react";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import BountyCheck from "./BountyCheck";
-import { Button } from "../ui/button";
-import Issues from "./Issues";
+import BountyCheck from "../BountyCheck";
+import BountyValue from "./BountyValue";
+import { Button } from "../../ui/button";
+import Issues from "../Issues";
 import { useNavigate } from "react-router-dom";
-import MultiSelect from "./MultiSelect";
+import MultiSelect from "../MultiSelect";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
+import DatePicker from "./DatePicker";
 
-const AddNewProjectComponent = () => {
+const AddHelpProProject = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [githubLink, setGithubLink] = useState("");
   const [techStack, setTechStack] = useState("");
+  const [bountyValue, setBountyValue] = useState("0");
+  const [currency, setCurrency] = useState("INR");
+  const [endDate, setEndDate] = useState(new Date());
   const navigate = useNavigate();
   const user : string  = localStorage.getItem("user") || "{}";
   const id = JSON.parse(user).id;
@@ -44,15 +49,18 @@ const AddNewProjectComponent = () => {
       toast.error("Github Link cannot be empty");
       return;
     }
-
+    console.log(title,description,bountyValue,isChecked,githubLink, endDate);
     // make a post request to the backend
     try {
       const res = axios.post(
-        `${BACKEND_URL}/api/v1/post/create`,
+        `${BACKEND_URL}/api/v1/project/create`,
         {
           title,
           description,
           bounty: isChecked,
+          bountyValue : bountyValue,
+            currency: currency,
+            endDate,
           techstack: techStack,
           authorId: id,
           link: githubLink,
@@ -70,17 +78,17 @@ const AddNewProjectComponent = () => {
   };
 
   return (
-    <div className="lg:px-[22rem] mx-auto p-4 dark:bg-[#212c3c]">
+    <div className="lg:px-[22rem] mx-auto p-4 dark:bg-[#212c3c] dark:text-white">
       <Toaster />
       <div className="flex flex-col gap-5">
         <div>
-          <h2 className="text-2xl font-semibold leading-7 dark:text-white text-gray-900">
+          <h2 className="text-5xl font-semibold leading-7 dark:text-white text-gray-900">
             Add New Project
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
+          {/* <p className="mt-1 text-sm leading-6 text-gray-600">
             This information will be displayed publicly so be careful what you
             share.
-          </p>
+          </p> */}
         </div>
         <div className="">
           <h2 className="mb-2 block text-sm font-medium leading-6 dark:text-white text-gray-900">
@@ -110,7 +118,16 @@ const AddNewProjectComponent = () => {
           <h2 className="mb-2 block text-sm font-medium leading-6 dark:text-white text-gray-900">
             Do you include bounty in this Project?
           </h2>
-          <BountyCheck isChecked={isChecked} setIsChecked={setIsChecked} />
+          <div className="flex gap-5">
+
+            <BountyCheck isChecked={isChecked} setIsChecked={setIsChecked} />
+            {
+                isChecked===false && <BountyValue 
+                bountyValue={bountyValue}
+                setBountyValue={setBountyValue}
+                currency={currency} setCurrency={setCurrency} />
+            }
+          </div>
         </div>
         <div>
           <h2 className="mb-2 block text-sm font-medium leading-6 dark:text-white text-gray-900">
@@ -131,7 +148,10 @@ const AddNewProjectComponent = () => {
           />
         </div>
         <div>
-          <Issues link={githubLink} />
+            <h2 className="mb-2 block text-sm font-medium leading-6 dark:text-white text-gray-900">
+                Pick up an end Date
+            </h2>
+            <DatePicker date={endDate} setEndDate={setEndDate} />
         </div>
         <div className="w-full flex justify-end gap-3">
           <Button
@@ -149,4 +169,4 @@ const AddNewProjectComponent = () => {
   );
 };
 
-export default AddNewProjectComponent;
+export default AddHelpProProject;

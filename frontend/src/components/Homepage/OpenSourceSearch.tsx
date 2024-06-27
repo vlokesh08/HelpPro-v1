@@ -18,7 +18,7 @@ const OpenSourceSearch: React.FC = () => {
   useEffect(() => {
     const handleSearch = async () => {
       try {
-        const response = await axios.post<Post[]>(`${BACKEND_URL}/api/v1/search/search`, {
+        const response = await axios.post<Post[]>(`${BACKEND_URL}/api/v1/search/post`, {
           query: query
         });
         setResults(response.data);
@@ -41,12 +41,12 @@ const OpenSourceSearch: React.FC = () => {
       <Input
         type="text"
         placeholder="Search"
-        className="w-[450px]"
+        className=""
         value={query}
         onChange={(e) => { setQuery(e.target.value) }}
       />
       {showResults && (
-        <div className="w-[450px] absolute">
+        <div className="w-[450px]">
           {results.map((post) => (
             <div key={post.id} className="mb-2 p-2 border rounded bg-white">
               <h2 className="text-2xl">{post.title}</h2>

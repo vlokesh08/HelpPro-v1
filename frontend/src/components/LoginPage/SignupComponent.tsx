@@ -41,7 +41,7 @@ const SignupComponent = ({ isChecked }: any) => {
     <div>
       <Toaster />
       <div>
-      <h1 className="text-3xl font-bold mb-6 text-center">SignUp</h1>
+      <h1 className="text-5xl  font-spacegotesk font-bold mb-6 ">Get Started!</h1>
         <div>
           <label
             htmlFor="email"

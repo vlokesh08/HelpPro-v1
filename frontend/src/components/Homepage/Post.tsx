@@ -14,16 +14,29 @@ interface PostProps {
   bounty: boolean;
   author: string;
   techstack: string;
+  profile: string;
 }
 
-const Post = ({ title, description, bounty, author, techstack }: PostProps) => {
+const Post = ({ title, description, bounty, author, techstack, profile }: PostProps) => {
   return (
     <div className="w-full">
-      <Card>
+      <Card className="dark:bg-[#283445] hover:border-[#3a86ff] hover:border-2">
         <CardHeader>
           <CardTitle>
             <div className="flex justify-between items-center">
-              <h1 className="text-lg font-bold">{title}</h1>
+              {
+                <div className="flex items-center gap-3">
+                  
+                  <img
+                    src={profile || "https://avatars.githubusercontent.com/u/54230353?v=4"}
+                    alt="avatar"
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <h1 className=" text-lg font-semibold">{author}</h1>
+                </div>
+
+              }
+              
               {bounty && (
                 <span className="bg-green-100 flex items-center gap-2 text-green-800 text-sm font-medium px-2.5 py-1 rounded dark:bg-green-900 dark:text-green-300">
                   <svg
@@ -47,10 +60,10 @@ const Post = ({ title, description, bounty, author, techstack }: PostProps) => {
               )}
             </div>
           </CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardDescription><h1 className="text-lg font-bold">{title}</h1></CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-700">Author: {author}</p>
+        {description.slice(0,50)+" ..."}
         </CardContent>
         <CardFooter>
           <p>

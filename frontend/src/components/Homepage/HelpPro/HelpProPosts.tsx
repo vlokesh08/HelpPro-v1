@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
-import Post from './Post'
+import Post from '../Post'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-const HomepagePosts = () => {
+import image from "../../../../public/images/noposts.svg"
+import { Skeleton } from '@/components/ui/skeleton'
+const HelpProPosts = () => {
   const [posts, setPosts] = React.useState([])
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate()
   useEffect(() => {
-    axios.get(`${BACKEND_URL}/api/v1/post/all`,{
+    axios.get(`${BACKEND_URL}/api/v1/project/all`,{
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -20,6 +22,7 @@ const HomepagePosts = () => {
       console.log(err)
     })
   }, [])
+
   if(posts.length === 0){
     return (
       <div className="w-full dark:bg-[] flex justify-center my-12">
@@ -36,10 +39,8 @@ const HomepagePosts = () => {
         {
           posts.length>0 &&  posts.map((post: any) => {
             return (
-              <div onClick={()=>{navigate(`/post/${post.id}`)}} className=' cursor-pointer'>
-                <Post title={post.title} description={post.description} bounty={post.bounty} author={post.author.name} techstack={post.techstack}
-                  profile={post.author.profilePic}
-                />
+              <div onClick={()=>{navigate(`/project/${post.id}`)}} className=' cursor-pointer'>
+                <Post title={post.title} description={post.description} bounty={post.bounty} author={post.author.name} techstack={post.techstack} />
               </div>
             )
 
@@ -50,4 +51,4 @@ const HomepagePosts = () => {
   )
 }
 
-export default HomepagePosts
+export default HelpProPosts

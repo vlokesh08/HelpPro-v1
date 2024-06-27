@@ -22,6 +22,7 @@ import {
 import EditPost from "@/components/Operations/EditPost";
 import DeletePost from "@/components/Operations/DeletePost";
 import { Toaster } from "sonner";
+import HelpPro from "@/components/Homepage/HelpPro/HelpPro";
 
 interface Post {
   id: string;
@@ -44,19 +45,8 @@ interface GitHubIssue {
   // Add any other relevant fields from GitHub issues
 }
 
-const parseGitHubUrl = (url: string) => {
-  const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)/;
-  const match = url.match(regex);
-  if (match) {
-    return {
-      owner: match[1],
-      repo: match[2],
-    };
-  }
-  return null;
-};
 
-const Post: React.FC = () => {
+const HelpProProjectPreview: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -73,7 +63,7 @@ const Post: React.FC = () => {
     const fetchPost = async () => {
       try {
         const res = await axios.get<{ post: Post }>(
-          `${BACKEND_URL}/api/v1/post/getPostById/${id}`,
+          `${BACKEND_URL}/api/v1/project/getPostById/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -93,33 +83,6 @@ const Post: React.FC = () => {
     fetchPost();
   }, [id, BACKEND_URL]);
 
-  useEffect(() => {
-    const fetchIssues = async () => {
-      if (post?.link) {
-        const parsedUrl = parseGitHubUrl(post.link);
-        if (parsedUrl) {
-          const { owner, repo } = parsedUrl;
-          try {
-            const response = await axios.get<GitHubIssue[]>(
-              `https://api.github.com/repos/${owner}/${repo}/issues`,
-              {
-                params: {
-                  per_page: 10,
-                  page: page,
-                },
-              }
-            );
-            setIssues(response.data);
-          } catch (err) {
-            console.error(err);
-            setError("Error fetching issues");
-          }
-        }
-      }
-    };
-
-    fetchIssues();
-  }, [post, page]);
 
   const handleDelete = () => {
     // Add delete logic here
@@ -222,9 +185,9 @@ const Post: React.FC = () => {
                 </span>
               )}
             </div>
-            <div className="w-[550px]">
+            <div className="">
 
-              <p className="text-lg w-[50px] text-justify">{post.description}</p>
+              <p className="text-lg w-full text-justify">{post.description}</p>
             </div>
             <div className="flex gap-4 font-semibold">
               <h2>TechStack</h2>
@@ -242,59 +205,7 @@ const Post: React.FC = () => {
                 <Button>Github</Button>
               </a>
             </div>
-            <div>
-              <h2 className="font-semibold text-lg">Issues</h2>
-              {issues.length > 0 ? (
-                <ul className="">
-                  {issues.map((issue) => (
-                    <li key={issue.id}>
-                      <Card className="my-3">
-                        <CardHeader>
-                          <CardTitle>
-                            <div className="flex justify-between">
-                              {issue.title}
-                              <Button className="ml-2">
-                                <a
-                                  href={issue.html_url}
-                                  target="__blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  Open Issue
-                                </a>
-                              </Button>
-                            </div>
-                          </CardTitle>
-                          <CardDescription>
-                            By {issue.user?.login}
-                          </CardDescription>
-                        </CardHeader>
-                      </Card>
-                      {/* <a
-                        href={issue.html_url}
-                        target="__blank"
-                        rel="noopener noreferrer"
-                      >
-                        {issue.title}
-                      </a> */}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <Card className="my-3">
-                  <CardHeader className="flex justify-center">
-                    <CardTitle className="text-center">
-                      We Found no issues for this Repository
-                    </CardTitle>
-                  </CardHeader>
-                </Card>
-              )}
-              <div className="flex gap-2">
-                <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
-                  Previous
-                </Button>
-                <Button onClick={() => setPage(page + 1)}>Next</Button>
-              </div>
-            </div>
+
           </div>
         ) : (
           <p>Post not found.</p>
@@ -304,4 +215,4 @@ const Post: React.FC = () => {
   );
 };
 
-export default Post;
+export default HelpProProjectPreview;

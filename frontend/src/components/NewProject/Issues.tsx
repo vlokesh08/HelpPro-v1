@@ -92,7 +92,7 @@ const Issues: React.FC<IssuesProps> = ({ link }) => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="dark:text-white">Add Github Link to get the Issues</p>;
   }
 
   if (error) {

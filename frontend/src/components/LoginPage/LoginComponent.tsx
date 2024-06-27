@@ -49,8 +49,8 @@ const LoginComponent = ({ isChecked }: any) => {
   return (
     <div>
       <Toaster />
-      <div>
-      <h1 className="text-3xl font-bold mb-6 text-center">Welcome back!</h1>
+      <div className="font-spacegotesk">
+      <h1 className="text-5xl font-bold mb-6 font-spacegotesk">Welcome back!</h1>
         <div className="my-1">
           <label
             htmlFor="email"

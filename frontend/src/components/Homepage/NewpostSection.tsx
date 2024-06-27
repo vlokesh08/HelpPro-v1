@@ -18,7 +18,7 @@ const NewpostSection = () => {
           <CardDescription>Add your Project here</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button className="w-full" onClick={()=>{navigate("/newproject")}}>Add Project</Button>
+          <Button className="w-full" onClick={()=>{navigate("/newpost")}}>Add Project</Button>
         </CardContent>
       </Card>
     </div>

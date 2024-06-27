@@ -16,7 +16,7 @@ const BountyCheck = ({
 
   return (
     <>
-      <label className='themeSwitcherTwo shadow-card relative inline-flex cursor-pointer select-none items-center justify-center rounded-md bg-white p-1'>
+      <label className='themeSwitcherTwo shadow-card relative inline-flex cursor-pointer select-none items-center justify-center rounded-md bg-white p-1 dark:bg-[#44546b]'>
         <input
           type='checkbox'
           className='sr-only'
@@ -25,14 +25,14 @@ const BountyCheck = ({
         />
         <span
           className={`flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${
-            !isChecked ? 'text-primary bg-[#f4f7ff]' : 'text-body-color'
+            !isChecked ? 'text-black bg-[#f4f7ff]' : 'text-body-color'
           }`}
         >
           Bounty
         </span>
         <span
           className={`flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${
-            isChecked ? 'text-primary bg-[#f4f7ff]' : 'text-body-color'
+            isChecked ? 'text-black bg-[#f4f7ff]' : 'text-body-color'
           }`}
         >
 

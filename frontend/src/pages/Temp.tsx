@@ -3,6 +3,9 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import SocialProfiles from "@/components/ProfilePage/SocialProfiles";
 import AboutSection from "@/components/ProfilePage/AboutSection";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import HelpProProfilePosts from "@/components/ProfilePage/HelpProProfilePosts";
+import OpenSourceProfilePosts from "@/components/ProfilePage/OpenSourceProfilePosts";
 
 interface User {
     id: number;
@@ -29,8 +32,8 @@ const Temp = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${BACKEND_URL}/api/v1/user/${userId}`);
-                console.log(response.data);
-                setUserData(response.data);
+                console.log(response.data[0]);
+                setUserData(response.data[0]);
             } catch (error) {
                 console.error("Error fetching courses", error);
             }
@@ -55,7 +58,7 @@ const Temp = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 dark:bg-[#212c3c] dark:text-white">
       <header className="bg-cover bg-center h-64 bg-blue-400">
         <div className="container mx-auto p-6 flex justify-between items-center">
           {/* <input type="text" placeholder="Search" className="border p-2 rounded-md"/> */}
@@ -66,7 +69,7 @@ const Temp = () => {
         <div className="flex flex-col  md:flex-row md:items-start md:space-x-6 w-full">
           <div className="absolute top-[280px] w-[150px] h-[150px]">
             <img
-              src="https://avatars.githubusercontent.com/u/124599?v=4"
+              src={userData.profilePic || "https://avatars.githubusercontent.com/u/124599?v=4"}
               alt="Profile"
               className="rounded-full border-4 border-white"
             />
@@ -83,39 +86,30 @@ const Temp = () => {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 space-y-6">
             <section>
                 <AboutSection about={userData.details} />
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold">Courses</h2>
-              <div className="mt-4 space-y-4">
-                {courses.map((course, index) => (
-                  <div
-                    key={index}
-                    className="bg-white p-4 rounded shadow flex flex-col md:flex-row"
-                  >
-                    <img
-                      src={course.image}
-                      alt={course.title}
-                      className="w-full md:w-1/3 rounded"
-                    />
-                    <div className="md:ml-4 mt-4 md:mt-0">
-                      <h3 className="text-xl font-bold">{course.title}</h3>
-                      <p className="text-gray-600 mt-2">{course.description}</p>
-                      <div className="flex space-x-4 mt-4">
-                        <button className="px-4 py-2 bg-gray-200 rounded">
-                          Play
-                        </button>
-                        <button className="px-4 py-2 bg-gray-200 rounded">
-                          Save for later
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <h2 className="text-2xl font-bold">Posts</h2>
+              <div className="flex justify-start">
+
+                <Tabs defaultValue="account" className="w-full mt-4 flex flex-col justify-start">
+              <div className="flex justify-start">
+                <TabsList className="dark:bg-[#44546b]">
+                  <TabsTrigger value="account">Help Pro</TabsTrigger>
+                  <TabsTrigger value="password">OpenSource Projects</TabsTrigger>
+                </TabsList>
+              </div>
+              <TabsContent value="account">
+                <HelpProProfilePosts />
+              </TabsContent>
+              <TabsContent value="password">
+                <OpenSourceProfilePosts />
+              </TabsContent>
+            </Tabs>
               </div>
             </section>
           </div>
@@ -123,11 +117,11 @@ const Temp = () => {
           <aside className="md:col-span-1 space-y-6">
             <section>
               <h2 className="text-2xl font-bold">Social Profiles</h2>
-                <div className="mt-4 flex flex-col space-y-2">
+                <div className="mt-2 flex flex-col">
                     <SocialProfiles githubLink={userData.githubLink} linkedinLink={userData.linkedinLink} portfolio={userData.portfolio} />
                     </div>
             </section>
-
+{/* 
             <section>
               <h2 className="text-2xl font-bold">Skills</h2>
               <div className="mt-4 flex flex-wrap space-x-2">
@@ -139,15 +133,7 @@ const Temp = () => {
                   )
                 )}
               </div>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold">Locations</h2>
-              <div className="flex space-x-2 mt-4">
-                <span className="rounded-full bg-gray-200 p-2">🇩🇰</span>
-                <span className="rounded-full bg-gray-200 p-2">🇬🇧</span>
-              </div>
-            </section>
+            </section> */}
 
             <section>
               <h2 className="text-2xl font-bold">Contact</h2>
