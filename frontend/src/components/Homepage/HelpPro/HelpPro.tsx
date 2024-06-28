@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import HelpProSearch from "./HelpProSearch";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../ui/button";
@@ -8,7 +9,6 @@ import {
   ResizablePanelGroup,
 } from "../../ui/resizable";
 import { Separator } from "@/components/ui/separator";
-
 import {
   Dialog,
   DialogContent,
@@ -18,21 +18,42 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-const HelpPro = () => {
 
+const HelpPro = () => {
   const user = localStorage.getItem("user") || "{}";
   const userObj = JSON.parse(user);
   const name = userObj.name;
   const navigate = useNavigate();
+  const searchInputRef = useRef(null); // Create a ref for the search input
+
+  useEffect(() => {
+    const handleKeyDown = (event : any) => {
+      if (event.ctrlKey && event.key === "k") {
+        event.preventDefault(); // Prevent the default action
+        searchInputRef.current.focus(); // Focus the search input
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <div>
-      <div className="w-full container  py-5">
+      <div className="w-full container py-5">
         <div className="flex-col hidden md:flex">
-          <div className="flex  justify-between">
+          <div className="flex justify-between">
             <div className="flex">
               <Dialog>
                 <DialogTrigger>
-                  <Input type="text" placeholder="Search"></Input>
+                  <Input
+                    type="text"
+                    placeholder="Search"
+                    ref={searchInputRef} // Attach the ref to the input
+                  ></Input>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
@@ -51,7 +72,7 @@ const HelpPro = () => {
                 onClick={() => {
                   navigate("/newproject");
                 }}
-                className="w-ful"
+                className="w-full"
                 variant={"primary"}
               >
                 Create New Project
@@ -65,7 +86,7 @@ const HelpPro = () => {
             >
               <ResizablePanel defaultSize={60}>
                 <div>
-                  <img src="../../../public/images/OpenSource1.jpeg"></img>
+                  <img src="images/OpenSource1.jpeg" alt="Open Source" />
                 </div>
               </ResizablePanel>
               <ResizableHandle />
@@ -73,12 +94,10 @@ const HelpPro = () => {
                 <div className="flex h-[200px] p-6">
                   <span className="">
                     <div className="dark:text-white">
-                      <h1 className=" font-semibold text-5xl ">Hello!</h1>
-                      <h1 className=" font-light text-5xl text-[#3a86ff] text-justify">
-                        {name}
+                      <h1 className="font-semibold text-5xl">Hello</h1>
+                      <h1 className="font-light text-5xl text-[#3a86ff] text-justify">
+                        {name}!
                       </h1>
-                      <h2> </h2>
-
                       <p className="text-justify mt-5">
                         Welcome to HelpPro, where you can collaborate with other
                         developers and work on projects together. You can also
@@ -103,12 +122,10 @@ const HelpPro = () => {
           </div>
         </div>
         <div className="block md:hidden m-5">
-          {/* <NewpostSection /> */}
           <HelpProSearch />
         </div>
       </div>
       <div className="block md:hidden m-5">
-        {/* <AddHelpProProject /> */}
         <HelpProPosts />
       </div>
     </div>

@@ -26,6 +26,8 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/temp" element={<LandingPage />} />
         <Route path="/upload" element={<Upload />} />
+        <Route path="/landing" element={<LandingPage />} />
+
 
 
         <Route path="*" element={<div>Not Found</div>} />

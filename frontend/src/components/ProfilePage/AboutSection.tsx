@@ -34,7 +34,7 @@ const AboutSection = ({ about }: any) => {
         <div>
           <Dialog>
             <DialogTrigger>
-              <Button variant={"primary"} className="mb-5">Add Bio!</Button>{" "}
+              <Button variant={"primary"} className="mb-5">Add Bio</Button>{" "}
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

@@ -9,7 +9,7 @@ interface User {
   username: string;
   name: string;
   details: string;
-  profilePic: string; 
+  profilePic: string;
 }
 
 const ProfileSection = () => {
@@ -18,10 +18,10 @@ const ProfileSection = () => {
   const userObj = JSON.parse(user as string);
   const userId = userObj.id;
   const [userData, setUserData] = React.useState<User>({} as User);
-  const [username, setUsername] = React.useState<string>('');
-    const [name, setName] = React.useState<string>('');
-    const [bio, setBio] = React.useState<string>('');
-    const [profilePic, setProfilePic] = React.useState<string>('');
+  const [username, setUsername] = React.useState<string>("");
+  const [name, setName] = React.useState<string>("");
+  const [bio, setBio] = React.useState<string>("");
+  const [profilePic, setProfilePic] = React.useState<string>("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,48 +39,74 @@ const ProfileSection = () => {
     fetchData();
   }, []);
 
-    const handleSave = async () => {
-        try {
-        const data = await axios.put(`${BACKEND_URL}/api/v1/user/${userId}`, {
-            username: username,
-            name: name,
-            details: bio,
-            profilePic: profilePic
-        });
-        console.log(data);
-        } catch (error) {
-        console.error("Error saving social profiles", error);
-        }
-    };
+  const handleSave = async () => {
+    try {
+      const data = await axios.put(`${BACKEND_URL}/api/v1/user/${userId}`, {
+        username: username,
+        name: name,
+        details: bio,
+        profilePic: profilePic,
+      });
+      console.log(data);
+    } catch (error) {
+      console.error("Error saving social profiles", error);
+    }
+  };
   return (
-    <div className="dark:text-white">
+    <div className="dark:text-white flex flex-col gap-3">
       <h1 className="text-xl font-bold">Profile</h1>
       <h4 className="text-gray-500">
         Your profile settings and privacy preferences
       </h4>
       <div>
         <div className="flex flex-col gap-2">
-          <div>
+          <div >
             <label htmlFor="username" className="font-semibold">
               Username
             </label>
-            <Input type="text" id="email" className="mt-1" value={username} onChange={(e)=>{setUsername(e.target.value)}} />
+            <Input
+              type="text"
+              id="email"
+              className="mt-1"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
           </div>
-          <div className="flex flex-col gap-2">
+          <div >
             <label htmlFor="name" className="font-semibold">
               Name
             </label>
-            <Input type="text" id="name" className="mt-1" value={name} onChange={(e)=>{setName(e.target.value)}} />
+            <Input
+              type="text"
+              id="name"
+              className="mt-1"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
           </div>
 
           <div>
             <label htmlFor="bio" className="font-semibold">
               Bio
             </label>
-            <Textarea id="bio" className="mt-1" value={bio} onChange={(e)=>{setBio(e.target.value)}} />
+            <Textarea
+              id="bio"
+              className="mt-1"
+              value={bio}
+              onChange={(e) => {
+                setBio(e.target.value);
+              }}
+            />
           </div>
           <div className="flex justify-end">
-            <Button className="bg-[#3a86ff] text-white px-4 py-2 rounded-lg" onClick={handleSave}>
+            <Button
+              className="bg-[#3a86ff] text-white px-4 py-2 rounded-lg"
+              onClick={handleSave}
+            >
               Save
             </Button>
           </div>

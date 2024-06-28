@@ -44,7 +44,7 @@ const Temp = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-[#212c3c] dark:text-white">
-      <header className="bg-cover bg-center h-64 bg-blue-400">
+      <header className="bg-cover bg-center h-52   bg-blue-400">
         <div className="container mx-auto p-6 flex justify-between items-center">
           {/* <input type="text" placeholder="Search" className="border p-2 rounded-md"/> */}
         </div>
@@ -52,7 +52,7 @@ const Temp = () => {
 
       <div className="container mx-auto p-6 w-full">
         <div className="flex flex-col  md:flex-row md:items-start md:space-x-6 w-full">
-          <div className="absolute top-[280px] w-[150px] h-[150px]">
+          <div className="absolute top-[230px] w-[150px] h-[150px]">
             <img
               src={userData.profilePic || "https://avatars.githubusercontent.com/u/124599?v=4"}
               alt="Profile"

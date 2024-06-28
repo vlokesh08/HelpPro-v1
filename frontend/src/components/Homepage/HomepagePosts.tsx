@@ -24,7 +24,7 @@ const HomepagePosts = () => {
     return (
       <div className="w-full dark:bg-[] flex justify-center my-12">
         <div className="flex flex-col justify-center items-center">
-          <img src="../../../../public/images/noposts.svg" className="w-[250px] h-[250px]"></img>
+          <img src="images/noposts.svg" className="w-[250px] h-[250px]"></img>
           <h1 className="dark:text-white text-2xl my-5">No Posts at Present!</h1>
         </div>
       </div>

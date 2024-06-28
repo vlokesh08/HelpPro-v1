@@ -6,7 +6,7 @@ const Loading = () => {
 
       <span className="text-4xl text-center mt-20 absolute flex justify-center bottom-5 ">Loading...</span>
       </div>
-      <img src="../../public/images/Loading-rafiki.svg" className="h-screen w-full"></img>
+      <img src="images/Loading-rafiki.svg" className="h-screen w-full"></img>
     </div>
   );
 };

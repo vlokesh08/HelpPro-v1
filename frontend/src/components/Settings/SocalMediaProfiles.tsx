@@ -50,9 +50,9 @@ const SocalMediaProfiles = () => {
       <h4 className="text-gray-500">Your Social Media Profiles</h4>
 
       <div className="mt-5">
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="githubLink" className="font-semibold my-2">
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col">
+            <label htmlFor="githubLink" className="font-semibold p-1">
               Github Link
             </label>
             <Input
@@ -65,8 +65,8 @@ const SocalMediaProfiles = () => {
               }}
             />
           </div>
-          <div className="my-5 gap-2">
-            <label htmlFor="linkedinLink" className="font-semibold my-2">
+          <div className="">
+            <label htmlFor="linkedinLink" className="font-semibold p-1">
               LinkedIn Link
             </label>
             <Input
@@ -80,7 +80,7 @@ const SocalMediaProfiles = () => {
             />
           </div>
           <div>
-            <label htmlFor="portfolio" className="font-semibold">
+            <label htmlFor="portfolio" className="font-semibold p-1">
               Portfolio
             </label>
             <Input

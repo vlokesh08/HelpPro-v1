@@ -54,7 +54,7 @@ const HelpProPosts = () => {
       <div className="w-full flex justify-center my-12">
         <div className="flex flex-col justify-center items-center">
           <img
-            src="/images/noposts.svg"
+            src="images/noposts.svg"
             alt="No Posts"
             className="w-[250px] h-[250px]"
           />

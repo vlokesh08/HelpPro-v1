@@ -1,9 +1,11 @@
-import Loading from '@/components/Loading';
+import Hero from '@/components/LandingPage/Hero';
+import Navigation from '@/components/LandingPage/Navigation';
 
 const LandingPage = () => {
   return (
     <div>
-      <Loading />
+      <Navigation />
+      <Hero />
     </div>
   );
 };

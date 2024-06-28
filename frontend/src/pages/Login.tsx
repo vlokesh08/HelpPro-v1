@@ -58,7 +58,7 @@ const Login = () => {
       {/* Left Section */}
       <div className="flex-1 flex items-center justify-center p-8 ">
         <img
-          src="../../public/images/signup.jpg"
+          src="images/signup.jpg"
           className="mix-blend-multiply"
         ></img>
       </div>

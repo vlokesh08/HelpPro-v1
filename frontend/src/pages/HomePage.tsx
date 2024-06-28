@@ -4,8 +4,12 @@ import HelpPro from "@/components/Homepage/HelpPro/HelpPro";
 import OpenSource from "@/components/Homepage/OpenSource";
 import Navbar from "@/components/Navbar/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEffect } from "react";
 
 const HomePage = () => {
+  useEffect(() => {
+    document.title = 'HelpPro'; // Quick solution
+}, []);
   return (
     <div className="w-full">
       <Navbar />

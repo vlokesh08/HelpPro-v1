@@ -65,7 +65,7 @@ const OpenSource = () => {
           >
             <ResizablePanel defaultSize={60}>
               <div>
-                <img src="../../../public/images/OpenSource1.jpeg"></img>
+                <img src="images/OpenSource1.jpeg"></img>
               </div>
             </ResizablePanel>
             <ResizableHandle />
@@ -73,8 +73,8 @@ const OpenSource = () => {
               <div className="flex h-[200px] p-6">
                 <span className="">
                   <div className="dark:text-white">
-                    <h1 className=" font-semibold text-5xl">Hello!</h1>
-                    <h1 className=" font-light text-5xl text-justify text-[#3a86ff]">{name}</h1>
+                    <h1 className=" font-semibold text-5xl">Hello</h1>
+                    <h1 className=" font-light text-5xl text-justify text-[#3a86ff]">{name} !</h1>
                     <h2> </h2>
 
                     <p className="text-justify mt-5">
