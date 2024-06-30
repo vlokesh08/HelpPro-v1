@@ -28,7 +28,9 @@ module.exports = {
         "def": "#f5f7f7",
         "button-clr" : "#3a86ff",
         "dark-body" : "#212c3c",
-        "dark-box" : "#283445"
+        "dark-box" : "#283445",
+        "light-body": "#f5f7f7",
+        "light-button" : "#d2e0ff"
       },
       keyframes: {
         "accordion-down": {

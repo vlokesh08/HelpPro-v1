@@ -19,7 +19,7 @@ interface PostProps {
 
 const Post = ({ title, description, bounty, author, techstack, profile }: PostProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full font-spacegotesk">
       <Card className="dark:bg-[#283445] hover:border-[#3a86ff] hover:border-2">
         <CardHeader>
           <CardTitle>
@@ -60,10 +60,13 @@ const Post = ({ title, description, bounty, author, techstack, profile }: PostPr
               )}
             </div>
           </CardTitle>
-          <CardDescription><h1 className="text-lg font-bold">{title}</h1></CardDescription>
+          <CardDescription></CardDescription>
         </CardHeader>
         <CardContent>
-        {description.slice(0,50)+" ..."}
+          <div>
+          <h1 className="text-lg font-bold">{title}</h1>
+          {description.slice(0,50)+" ..."}
+          </div>
         </CardContent>
         <CardFooter>
           <p>

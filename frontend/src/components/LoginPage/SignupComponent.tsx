@@ -50,10 +50,9 @@ const SignupComponent = ({ isChecked } : any) => {
   return (
     <div>
       <Toaster />
+      
       <div>
-        <h1 className="text-5xl  font-spacegotesk font-bold mb-6 text-button-clr ">
-          HelpPro
-        </h1>
+      
         <h1 className="text-5xl  font-spacegotesk font-bold mb-6 ">
           Get Started!
         </h1>

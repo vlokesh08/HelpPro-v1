@@ -11,7 +11,10 @@ import {
 import EditPost from "@/components/Operations/EditPost";
 import DeletePost from "@/components/Operations/DeletePost";
 import { Toaster } from "sonner";
-
+import AuthorDetails from "@/components/ProjectPreviewPage/AuthorDetails";
+import { Github } from 'lucide-react';
+import { Send } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 interface Post {
   id: string;
   title: string;
@@ -20,15 +23,37 @@ interface Post {
   authorId: string;
   techstack: string;
   link: string;
-  bounty: number;
+  bounty: boolean;
+  bountyValue: string;
+  author:{
+    name: string;
+    username: string;
+    profilePic: string;
+  },
+  completion: string;
 }
 
+function formatDate(dateString : string) {
+  const date = new Date(dateString);
+
+  // Define an array of month names
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  // Get the day, month, and year
+  const day = date.getDate();
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  // Return the formatted date
+  return `${day} ${month} ${year}`;
+}
 
 const HelpProProjectPreview: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [userDetails, setUserDetails] = useState<any>({}); 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
   const [techStack, setTechStack] = useState<string[]>([]);
   const user: string = localStorage.getItem("user") || "{}";
@@ -45,7 +70,14 @@ const HelpProProjectPreview: React.FC = () => {
             },
           }
         );
+        console.log(res.data.post)
         setPost(res.data.post);
+        const  user = {
+          name: res.data.post.author.name,
+          username: res.data.post.author.username,
+          avatar: res.data.post.author.profilePic,
+        }
+        setUserDetails(user);
         setTechStack(res.data.post.techstack.split(","));
       } catch (e) {
         console.error(e);
@@ -75,7 +107,11 @@ const HelpProProjectPreview: React.FC = () => {
     <div>
       <Navbar />
       <Toaster />
-      <div className="lg:px-[20rem] mx-auto p-4">
+      <div className="lg:px-[20rem] mx-auto p-4 font-spacegotesk bg-light-body dark:bg-dark-body dark:text-white h-screen">
+        <div>
+          <AuthorDetails userDetails = {userDetails} />
+        </div>
+
         {user_id === post?.authorId && (
           <div className="flex justify-end gap-5 my-5">
             <Dialog>
@@ -160,9 +196,27 @@ const HelpProProjectPreview: React.FC = () => {
                 </span>
               )}
             </div>
+
+            
             <div className="">
 
               <p className="text-lg w-full text-justify">{post.description}</p>
+            </div>
+            <div className="flex justify-between">
+              <div>
+                {
+                  post.bountyValue && (
+                    <p className="text-lg font-semibold">Bounty: ${post.bountyValue}</p>
+                  )
+                }
+              </div>
+              <div>
+                	{
+                    post.completion && (
+                      <p className="text-lg font-semibold">Completion: {formatDate(post.completion)}</p>
+                    )
+                  }
+              </div>  
             </div>
             <div className="flex gap-4 font-semibold">
               <h2>TechStack</h2>
@@ -175,9 +229,24 @@ const HelpProProjectPreview: React.FC = () => {
                 </span>
               ))}
             </div>
-            <div>
+            <div className="flex gap-3">
               <a href={post.link} target="__blank" rel="noopener noreferrer">
-                <Button>Github</Button>
+                <Button>
+                  <Github size={18} className="mr-1" />  
+                  Github
+                </Button>
+              </a>
+              <a href={post.link} target="__blank" rel="noopener noreferrer">
+                <Button>
+                  <Send size={18} className="mr-1" />  
+                  Contact
+                </Button>
+              </a>
+              <a href={post.link} target="__blank" rel="noopener noreferrer">
+                <Button>
+                  <Bookmark size={18} className="mr-1" />  
+                  Bookmark
+                </Button>
               </a>
             </div>
 

@@ -14,8 +14,8 @@ import {
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
+    title: "Developers",
+    href: "/developers",
     description:
       "A modal dialog that interrupts the user with important content and expects a response.",
   },

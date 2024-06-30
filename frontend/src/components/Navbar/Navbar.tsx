@@ -46,8 +46,8 @@ const Navbar = () => {
       <div className="container">
         <div className="relative -mx-4 flex items-center justify-between">
           <div className="w-60 max-w-full px-4">
-            <a href="/" className="block w-full py-5">
-              <h1 className=" font-bold text-xl text-[#3a86ff] dark:text-white">HelpPro</h1>
+            <a href="/" className="block w-full py-3">
+              <h1 className=" font-bold font-spacegotesk text-2xl text-[#3a86ff] dark:text-white">HelpPro</h1>
             </a>
           </div>
           <div className="flex w-full items-center justify-between px-4">

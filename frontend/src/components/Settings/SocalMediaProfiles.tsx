@@ -3,7 +3,6 @@ import axios from "axios";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
-
 const SocalMediaProfiles = () => {
   const [githubLink, setGithub] = React.useState<string>("");
   const [linkedin, setLinkedin] = React.useState<string>("");
@@ -63,7 +62,7 @@ const SocalMediaProfiles = () => {
               onChange={(e) => {
                 setGithub(e.target.value);
               }}
-            />
+            ></Input>
           </div>
           <div className="">
             <label htmlFor="linkedinLink" className="font-semibold p-1">
@@ -77,7 +76,7 @@ const SocalMediaProfiles = () => {
               onChange={(e) => {
                 setLinkedin(e.target.value);
               }}
-            />
+            > </Input>
           </div>
           <div>
             <label htmlFor="portfolio" className="font-semibold p-1">

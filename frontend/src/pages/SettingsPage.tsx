@@ -17,7 +17,7 @@ const SettingsPage = () => {
     <div>
       <Navbar />
       <Toaster />
-      <div className="flex h-[100vh] bg-def dark:bg-dark-body lg:px-[130px] px-5 gap-8">
+      <div className="flex h-[100vh] bg-def dark:bg-dark-body lg:px-[130px] px-5 gap-8 font-spacegotesk">
         <div className="bg-white dark:bg-dark-box p-8 my-5 rounded-xl w-[350px]">
           <h2
             onClick={() => handleSelected("profile")}

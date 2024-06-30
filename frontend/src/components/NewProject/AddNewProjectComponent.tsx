@@ -70,14 +70,14 @@ const AddNewProjectComponent = () => {
   };
 
   return (
-    <div className="lg:px-[22rem] mx-auto p-4 dark:bg-[#212c3c]">
+    <div className="lg:px-[22rem] mx-auto p-4 dark:bg-[#212c3c] font-spacegotesk dark:text-white">
       <Toaster />
-      <div className="flex flex-col gap-5">
-        <div>
-          <h2 className="text-2xl font-semibold leading-7 dark:text-white text-gray-900">
+      <div className="flex flex-col gap-5 ">
+        <div className="font-spacegotesks">
+          <h2 className="text-2xl font-semibold leading-7 font-spacegotesks dark:text-white text-gray-900">
             Add New Project
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
+          <p className="mt-1 text-sm  font-spacegotesks leading-6 text-gray-600">
             This information will be displayed publicly so be careful what you
             share.
           </p>

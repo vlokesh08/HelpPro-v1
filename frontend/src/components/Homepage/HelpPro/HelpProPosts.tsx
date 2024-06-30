@@ -58,7 +58,7 @@ const HelpProPosts = () => {
             alt="No Posts"
             className="w-[250px] h-[250px]"
           />
-          <h1 className="dark:text-white text-2xl my-5">No Posts at Present!</h1>
+          <h1 className="dark:text-white text-2xl my-5 font-spacegotesk">No Posts at Present!</h1>
         </div>
       </div>
     );

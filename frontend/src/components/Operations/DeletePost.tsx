@@ -20,8 +20,8 @@ const DeletePost = () => {
         }
     }
   return (
-    <div    >
-        <h1 className="mb-2 text-sm font-medium leading-6 text-gray-900">Delete Post</h1>
+    <div className="dark:text-white" >
+        <h1 className="mb-2 text-sm font-medium leading-6 text-gray-900 dark:text-white">Delete Post</h1>
         <p>Are you sure you want to delete this post?</p>
         <div className="flex justify-end">
 

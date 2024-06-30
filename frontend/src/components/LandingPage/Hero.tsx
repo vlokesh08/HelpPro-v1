@@ -1,23 +1,28 @@
+import { useNavigate } from "react-router-dom";
 const Hero = () => {
+    const navigate = useNavigate();
+    const handleLogin = () => {
+        // Add your login logic here
+        navigate("/login");
+    };
   return (
-    <div className="w-full h-screen">
-
+    <div className="w-full h-auto ">
       <div className="font-spacegotesk">
-        <section className="flex flex-col items-center  h-screen bg-white px-6">
+        <section className="flex flex-col items-center  bg-white dark:bg-dark-body dark:text-white px-6">
           <div className="w-full max-w-6xl mt-5">
             <img
               src="images/landing.svg" // Update the path to your image file
               alt="Diverse people illustration"
-              className="w-full h-[350px] object-cover object-top"
+              className="w-full h-[350px] object-cover object-top rounded-xl"
             />
             <div className="text-center mt-8">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-              Connect with developers, earn bounties, 
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+              Connect with <span className="text-button-clr">Developers</span>, earn <span className="text-green-500">bounties</span>, 
                 <br />
-                and discover open-source projects.
+                and discover open-source <span className="text-orange-400">projects</span>.
               </h1>
               <div className="mt-6 flex justify-center space-x-4">
-                <button className="px-6 py-2 bg-button-clr text-white rounded-md text-lg font-medium hover:bg-gray-800 transition">
+                <button className="px-6 py-2 bg-button-clr text-white rounded-md text-lg font-medium hover:bg-gray-800 transition" onClick={handleLogin}>
                   Get Started
                 </button>
                 <button className="px-6 py-2 bg-white text-black border border-gray-300 rounded-md text-lg font-medium hover:bg-gray-100 transition flex items-center">

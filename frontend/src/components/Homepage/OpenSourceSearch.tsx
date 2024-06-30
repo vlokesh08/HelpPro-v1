@@ -37,16 +37,17 @@ const OpenSourceSearch: React.FC = () => {
   }, [query]);
 
   return (
-    <div className="w-full ">
+    <div className="w-full font-spacegotesk">
       <Input
         type="text"
         placeholder="Search"
-        className=""
+        className="text-black dark:text-white text-lg"
         value={query}
         onChange={(e) => { setQuery(e.target.value) }}
+
       />
       {showResults && (
-        <div className="w-[450px]">
+        <div className="w-full my-2">
           {results.map((post) => (
             <div key={post.id} className="mb-2 p-2 border rounded bg-white">
               <h2 className="text-2xl">{post.title}</h2>

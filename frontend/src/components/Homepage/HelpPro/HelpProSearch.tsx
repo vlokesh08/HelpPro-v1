@@ -37,7 +37,7 @@ const HelpProSearch: React.FC = () => {
   }, [query, BACKEND_URL]);
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <Input
         type="text"
         placeholder="Search"
@@ -49,7 +49,7 @@ const HelpProSearch: React.FC = () => {
         <div className="w-full">
           {results.map((post) => (
             <div key={post.id} className="mb-2 p-2 rounded bg-white my-3 dark:bg-dark-box">
-              <h2 className="text-2xl text-white p-2">{post.title}</h2>
+              <h2 className="text-2xl text-black dark:text-white  p-2">{post.title}</h2>
               <p className="my-1 px-2">{post.description.slice(0, 50)}...</p>
               <div className="flex gap-1">
                 {post.techstack.split(",").map((tech, index) => (

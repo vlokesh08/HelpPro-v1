@@ -1,7 +1,7 @@
 import LoginComponent from "@/components/LoginPage/LoginComponent";
 import SignupComponent from "@/components/LoginPage/SignupComponent";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const GITHUB_CLIENT_ID = "Ov23ct6yKrCQOfjkoGQP";
 const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
@@ -23,7 +23,7 @@ const Login = () => {
 
       if (code) {
         setLoading(true);
-        console.log(isClicked)
+        console.log(isClicked);
         const response = await axios.post(
           `${BACKEND_URL}/api/v1/auth/githublogin`,
           {
@@ -48,23 +48,30 @@ const Login = () => {
     handleGitHubCallback();
   }, []);
 
+  useEffect(() => {
+    const user = localStorage.getItem("token");
+    if (user) {
+      navigate("/");
+    }
+  });
+
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <div className="h-screen flex flex-col md:flex-row bg-gray-100">
+    <div className="h-screen flex flex-col md:flex-row bg-gray-100 ">
       <Toaster />
       {/* Left Section */}
       <div className="flex-1 flex items-center justify-center p-8 ">
-        <img
-          src="images/signup.jpg"
-          className="mix-blend-multiply"
-        ></img>
+        <img src="images/signup.jpg" className="mix-blend-multiply"></img>
       </div>
 
       {/* Right Section */}
       <div className="flex-1 flex items-center rounded-2xl m-5 justify-center p-8 ">
+        <div className="top-12 right-[435px] absolute">
+          <h1 className=" text-button-clr font-bold text-5xl">HelpPro</h1>
+        </div>
         <div className="max-w-md w-full">
           <div className="space-y-4 ">
             {isChecked ? (

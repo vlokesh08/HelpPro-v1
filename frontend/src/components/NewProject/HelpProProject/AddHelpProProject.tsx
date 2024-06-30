@@ -77,7 +77,7 @@ const AddHelpProProject = () => {
   };
 
   return (
-    <div className="lg:px-[22rem] mx-auto p-4 dark:bg-[#212c3c] dark:text-white">
+    <div className="lg:px-[22rem] mx-auto p-4 dark:bg-[#212c3c] dark:text-white font-spacegotesk">
       <Toaster />
       <div className="flex flex-col gap-5">
         <div>

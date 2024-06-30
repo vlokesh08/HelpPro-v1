@@ -18,8 +18,8 @@ const HomePage = () => {
           <Tabs defaultValue="account" className="w-full mt-4">
             <div className="flex justify-center">
               <TabsList className="dark:bg-[#44546b] bg-[#f0f4ff]">
-                <TabsTrigger value="account">Help Pro</TabsTrigger>
-                <TabsTrigger value="password">OpenSource Projects</TabsTrigger>
+                <TabsTrigger value="account">Projects</TabsTrigger>
+                <TabsTrigger value="password">OpenSource</TabsTrigger>
               </TabsList>
             </div>
             <TabsContent value="account">
