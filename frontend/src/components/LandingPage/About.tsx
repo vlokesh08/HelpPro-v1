@@ -21,7 +21,7 @@ const About = () => {
                     <div className="dark:text-white flex flex-col align-middle">
                         <img src="/images/temp2.png" className="w-[280px] h-[80px]"></img>
                         <h1 className="text-5xl font-bold mt-10">Earn Bounties for Your Contributions</h1>
-                        <p className="mt-4">  </p>
+                        <p className="mt-4"> Join our platform to contribute your skills, earn bounties, and grow your professional network! </p>
                     </div>
                     <div>
                         <img src="/images/about2.svg" className="h-[520px] rounded-xl mix-blend-multiply "></img>
@@ -34,7 +34,7 @@ const About = () => {
                     <div className="dark:text-white flex flex-col align-middle">
                         <img src="/images/temp1.png" className="w-[280px] h-[120px] object-cover object-center"></img>
                         <h1 className="text-5xl font-bold mt-10">Access a Rich Repository of Open-Source Projects</h1>
-                        <p className="mt-4">Connect with developers from all over the world and collaborate on projects.</p>
+                        <p className="mt-4">Discover a vast repository of open-source projects. Access, contribute, and collaborate to make an impact!</p>
                     </div>
                 </div>
                 

@@ -3,10 +3,7 @@ import { useNavigate } from "react-router-dom";
 import HelpProSearch from "./HelpProSearch";
 import { Button } from "../../ui/button";
 import HelpProPosts from "./HelpProPosts";
-import {
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "../../ui/resizable";
+import { ResizablePanel, ResizablePanelGroup } from "../../ui/resizable";
 import { Separator } from "@/components/ui/separator";
 import {
   Dialog,
@@ -49,7 +46,10 @@ const HelpPro: React.FC = () => {
               <ResizablePanel defaultSize={75} className="flex align-middle">
                 <div className="flex w-full justify-center items-center align-middle">
                   <Dialog>
-                    <DialogTrigger ref={dialogTriggerRef} className="w-full flex justify-center items-center border-none">
+                    <DialogTrigger
+                      ref={dialogTriggerRef}
+                      className="w-full flex justify-center items-center border-none"
+                    >
                       <SearchBox />
                     </DialogTrigger>
                     <DialogContent className="border-none w-3/4 bg-dark-body">
@@ -79,7 +79,10 @@ const HelpPro: React.FC = () => {
             </ResizablePanelGroup>
           </div>
           <div className="w-full mt-5">
-            <ResizablePanelGroup direction="horizontal" className="w-full rounded-lg">
+            <ResizablePanelGroup
+              direction="horizontal"
+              className="w-full rounded-lg"
+            >
               <ResizablePanel defaultSize={60}>
                 <div>
                   <img

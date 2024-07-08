@@ -3,18 +3,17 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "@/components/Navbar/Navbar";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import EditPost from "@/components/Operations/EditPost";
-import DeletePost from "@/components/Operations/DeletePost";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Toaster } from "sonner";
 import AuthorDetails from "@/components/ProjectPreviewPage/AuthorDetails";
-import { Github } from 'lucide-react';
-import { Send } from 'lucide-react';
-import { Bookmark } from 'lucide-react';
+import { Github } from "lucide-react";
+import { Send } from "lucide-react";
+import HomeScreenLoading from "@/components/LoadingPages/HomeScreenLoading";
+import ContactDetails from "@/components/ProjectPreviewPage/ContactDetails";
+import Comments from "@/components/Comments/Comments";
+import SavePost from "@/components/SavePost";
+import DeleteProject from "@/components/Operations/DeleteProject";
+import EditProject from "@/components/Operations/EditProject";
 interface Post {
   id: string;
   title: string;
@@ -25,19 +24,32 @@ interface Post {
   link: string;
   bounty: boolean;
   bountyValue: string;
-  author:{
+  author: {
     name: string;
     username: string;
     profilePic: string;
-  },
+  };
   completion: string;
 }
 
-function formatDate(dateString : string) {
+function formatDate(dateString: string) {
   const date = new Date(dateString);
 
   // Define an array of month names
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   // Get the day, month, and year
   const day = date.getDate();
@@ -53,11 +65,12 @@ const HelpProProjectPreview: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [userDetails, setUserDetails] = useState<any>({}); 
+  const [userDetails, setUserDetails] = useState<any>({});
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
   const [techStack, setTechStack] = useState<string[]>([]);
   const user: string = localStorage.getItem("user") || "{}";
   const user_id = JSON.parse(user).id;
+
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -70,13 +83,13 @@ const HelpProProjectPreview: React.FC = () => {
             },
           }
         );
-        console.log(res.data.post)
+        console.log(res.data.post);
         setPost(res.data.post);
-        const  user = {
+        const user = {
           name: res.data.post.author.name,
           username: res.data.post.author.username,
           avatar: res.data.post.author.profilePic,
-        }
+        };
         setUserDetails(user);
         setTechStack(res.data.post.techstack.split(","));
       } catch (e) {
@@ -90,13 +103,16 @@ const HelpProProjectPreview: React.FC = () => {
     fetchPost();
   }, [id, BACKEND_URL]);
 
-
   const handleDelete = () => {
     // Add delete logic here
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        <HomeScreenLoading />
+      </div>
+    );
   }
 
   if (error) {
@@ -107,9 +123,9 @@ const HelpProProjectPreview: React.FC = () => {
     <div>
       <Navbar />
       <Toaster />
-      <div className="lg:px-[20rem] mx-auto p-4 font-spacegotesk bg-light-body dark:bg-dark-body dark:text-white h-screen">
+      <div className="lg:px-[20rem] mx-auto p-4 font-spacegotesk bg-light-body dark:bg-dark-body dark:text-white h-auto">
         <div>
-          <AuthorDetails userDetails = {userDetails} />
+          <AuthorDetails userDetails={userDetails} />
         </div>
 
         {user_id === post?.authorId && (
@@ -135,8 +151,8 @@ const HelpProProjectPreview: React.FC = () => {
                   Edit
                 </Button>
               </DialogTrigger>
-              <DialogContent>
-                <EditPost />
+              <DialogContent className="flex items-center justify-center w-1/2 h-3/4">
+                <EditProject />
               </DialogContent>
             </Dialog>
 
@@ -164,8 +180,8 @@ const HelpProProjectPreview: React.FC = () => {
                   Delete
                 </Button>
               </DialogTrigger>
-              <DialogContent>
-                <DeletePost />
+              <DialogContent className="w-1/2">
+                <DeleteProject />
               </DialogContent>
             </Dialog>
           </div>
@@ -197,26 +213,24 @@ const HelpProProjectPreview: React.FC = () => {
               )}
             </div>
 
-            
             <div className="">
-
               <p className="text-lg w-full text-justify">{post.description}</p>
             </div>
             <div className="flex justify-between">
               <div>
-                {
-                  post.bountyValue && (
-                    <p className="text-lg font-semibold">Bounty: ${post.bountyValue}</p>
-                  )
-                }
+                {post.bountyValue && (
+                  <p className="text-lg font-semibold">
+                    Bounty: ${post.bountyValue}
+                  </p>
+                )}
               </div>
               <div>
-                	{
-                    post.completion && (
-                      <p className="text-lg font-semibold">Completion: {formatDate(post.completion)}</p>
-                    )
-                  }
-              </div>  
+                {post.completion && (
+                  <p className="text-lg font-semibold">
+                    Completion: {formatDate(post.completion)}
+                  </p>
+                )}
+              </div>
             </div>
             <div className="flex gap-4 font-semibold">
               <h2>TechStack</h2>
@@ -232,24 +246,30 @@ const HelpProProjectPreview: React.FC = () => {
             <div className="flex gap-3">
               <a href={post.link} target="__blank" rel="noopener noreferrer">
                 <Button>
-                  <Github size={18} className="mr-1" />  
+                  <Github size={18} className="mr-1" />
                   Github
                 </Button>
               </a>
-              <a href={post.link} target="__blank" rel="noopener noreferrer">
-                <Button>
-                  <Send size={18} className="mr-1" />  
-                  Contact
-                </Button>
-              </a>
-              <a href={post.link} target="__blank" rel="noopener noreferrer">
-                <Button>
-                  <Bookmark size={18} className="mr-1" />  
-                  Bookmark
-                </Button>
-              </a>
+              <Dialog>
+                <DialogTrigger>
+                  <Button>
+                    <Send size={18} className="mr-1" />
+                    Contact
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-1/2">
+                  <ContactDetails id={post.authorId} />
+                </DialogContent>
+              </Dialog>
+              <SavePost 
+              id={id ?? ""}
+              isProject={true}
+              isPost={false}
+              />
             </div>
-
+            <div className="mt-4">
+              <Comments />
+            </div>
           </div>
         ) : (
           <p>Post not found.</p>

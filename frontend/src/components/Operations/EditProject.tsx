@@ -7,6 +7,9 @@ import MultiSelect from '../NewProject/MultiSelect';
 import { Button } from '../ui/button';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { ScrollArea } from "@/components/ui/scroll-area"
+import MiniPosts from '../LoadingPages/MiniPosts';
+
 
 interface Post {
   id: string;
@@ -24,13 +27,15 @@ const EditProject = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [techStack, setTechStack] = useState<string>("");
   const [githubLink, setGithubLink] = useState("");
+  const [loading, setLoading] = useState(false);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        setLoading(true);
         const res = await axios.get<{ post: Post }>(
-          `${BACKEND_URL}/api/v1/post/getPostById/${id}`,
+          `${BACKEND_URL}/api/v1/project/getPostById/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,7 +48,9 @@ const EditProject = () => {
         setIsChecked(!bounty);
         setTechStack(techstack);
         setGithubLink(link);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         toast.error("Error fetching post details");
       }
     };
@@ -52,8 +59,9 @@ const EditProject = () => {
 
   const handleEdit = async () => {
     try {
+      setLoading(true);
       const res = await axios.put(
-        `${BACKEND_URL}/api/v1/post/update/${id}`,
+        `${BACKEND_URL}/api/v1/project/update/${id}`,
         {
           title,
           description,
@@ -68,13 +76,20 @@ const EditProject = () => {
         }
       );
       toast.success(res.data.message);
+      setLoading(false);
     } catch (e) {
+      setLoading(false);
       toast.error("Error editing post");
     }
   };
 
+  if (loading) {
+    return <div><MiniPosts /></div>;
+  }
+
   return (
-    <div className="container mx-auto p-4">
+    <ScrollArea className="h-full w-full">
+    <div className="container p-4">
       <h1 className="text-2xl font-bold mb-4">Edit Post</h1>
       <div className="mb-4">
         <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">Title</h2>
@@ -112,6 +127,7 @@ const EditProject = () => {
         <Button onClick={handleEdit}>Edit Post</Button>
       </div>
     </div>
+    </ScrollArea>
   );
 };
 

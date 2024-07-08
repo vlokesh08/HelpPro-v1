@@ -2,11 +2,14 @@ import React, { useEffect } from 'react'
 import Post from './Post'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import HomeScreenLoading from '../LoadingPages/HomeScreenLoading'
 const HomepagePosts = () => {
   const [posts, setPosts] = React.useState([])
+  const [loading, setLoading] = React.useState(false)
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate()
   useEffect(() => {
+    setLoading(true)
     axios.get(`${BACKEND_URL}/api/v1/post/all`,{
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -14,12 +17,21 @@ const HomepagePosts = () => {
     })
     .then(res => {
       setPosts(res.data.posts)
-      console.log(res.data)
+      setLoading(false)
     })
     .catch(err => {
-      console.log(err)
+      console.error('Error fetching posts:', err)
+      setLoading(false)
     })
   }, [])
+
+  if(loading){
+    return (
+      <div>
+        <HomeScreenLoading />
+      </div>
+    )
+  }
   if(posts.length === 0){
     return (
       <div className="w-full dark:bg-[] flex justify-center my-12">

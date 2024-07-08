@@ -20,6 +20,8 @@ import {
 
 import ThemeToggle from "../ThemeToggle";
 import { useNavigate } from "react-router-dom";
+import NotificationToggle from "../Notifications/NotificationToggle";
+import SearchComponent from "./Search";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -27,9 +29,6 @@ const Navbar = () => {
   const userObj = JSON.parse(user || "{}");
   const profilePic = userObj.profilePic;
 
-  const handleProfile = () => {
-    navigate("/profile")
-  };
 
   const handleSettings = () => {
     navigate("/settings")
@@ -73,6 +72,8 @@ const Navbar = () => {
               </nav>
             </div>
             <div className="hidden  justify-end pr-16 sm:flex lg:pr-0">
+              <SearchComponent />
+              <NotificationToggle />
               <ThemeToggle />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -85,16 +86,16 @@ const Navbar = () => {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={handleProfile}>
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Profile</span>
-                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                      <a href={`/profile/${userObj.id}`} className="flex cursor-default w-full">
+                    <DropdownMenuItem className="w-full">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Profile</span>
                     </DropdownMenuItem>
+                      </a>
                     
                     <DropdownMenuItem onClick={handleSettings}>
                       <Settings className="mr-2 h-4 w-4" />
                       <span>Settings</span>
-                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     
                   </DropdownMenuGroup>

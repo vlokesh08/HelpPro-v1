@@ -7,21 +7,25 @@ import Post from './pages/Post';
 import ProfilePage from './pages/ProfilePage';
 import LandingPage from './pages/LandingPage';
 import HelpProNewProject from './pages/HelpProNewProject';
-import Upload from './pages/Upload';
 import HelpProProjectPreview from './pages/HelpProProjectPreview';
 import SettingsPage from './pages/SettingsPage';
 import PrivateRoute from './PrivateRoute';
 import LoadingPage from './pages/LoadingPage';
 import Developers from './pages/Developers';
+import HomeScreenLoading from './components/LoadingPages/HomeScreenLoading';
+import MobileWarn from './components/MobileWarn';
 
 function App() {
   return (
     <>
+    <div className="hidden md:block">
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/developers" element={<Developers />} />
         <Route path="/lala" element={<LoadingPage />} />
+        <Route path="/yoyo" element={<HomeScreenLoading />} />
+
         <Route
           path="/"
           element={
@@ -71,7 +75,7 @@ function App() {
           }
         />
         <Route
-          path="/profile"
+          path="/profile/:id"
           element={
             <PrivateRoute>
               <ProfilePage />
@@ -86,15 +90,19 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/upload"
           element={
             <PrivateRoute>
               <Upload />
             </PrivateRoute>
           }
-        />
+        /> */}
       </Routes>
+    </div>
+    <div className="md:hidden block">
+      <MobileWarn />
+    </div>
     </>
   );
 }

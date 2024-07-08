@@ -3,6 +3,7 @@ import { Button } from '../ui/button'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
+import { Trash2 } from 'lucide-react';
 const DeletePost = () => {
     const { id } = useParams<{ id: string }>()
     const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
@@ -21,11 +22,14 @@ const DeletePost = () => {
     }
   return (
     <div className="dark:text-white" >
-        <h1 className="mb-2 text-sm font-medium leading-6 text-gray-900 dark:text-white">Delete Post</h1>
+        <h1 className="mb-2 text-xl font-bold leading-6 text-gray-900 dark:text-white">Delete Post</h1>
         <p>Are you sure you want to delete this post?</p>
         <div className="flex justify-end">
 
-        <Button onClick={handleDelete}>Delete</Button>
+        <Button onClick={handleDelete}>
+          <Trash2 className="h-[18px] w-[18px] mr-1" />
+          Delete
+        </Button>
         </div>
     </div>
   )

@@ -1,29 +1,40 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { Button } from '../ui/button'
+import MiniPosts from '../LoadingPages/MiniPosts'
 
-const OpenSourceProfilePosts = () => {
+const OpenSourceProfilePosts = ( {userId} : {userId : string}) => {
   const [posts, setPosts] = React.useState([])
+  const [loading, setLoading] = React.useState(false)
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string
-  const user = localStorage.getItem('user')
-  const user_temp = JSON.parse(user as string)
-  const user_id = user_temp.id;
+
+  const user_id = userId;
   useEffect(() => { 
     const fetchPosts = async () => {
+      setLoading(true)
       try {
         const res = await axios.get(`${BACKEND_URL}/api/v1/post/getUserPosts/${user_id}`,{
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         })
-        console.log(res.data)
         setPosts(res.data.posts)
+        setLoading(false)
       } catch (error) {
         console.log(error)
+        setLoading(false)
       }
     }
     fetchPosts()
   }, [])
+
+  if(loading){
+    return (
+      <div>
+        <MiniPosts />
+      </div>
+    )
+  }
 
   if(posts.length === 0){
     return (

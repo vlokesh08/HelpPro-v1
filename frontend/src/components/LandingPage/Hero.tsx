@@ -7,6 +7,7 @@ const Hero = () => {
     };
   return (
     <div className="w-full h-auto ">
+      
       <div className="font-spacegotesk">
         <section className="flex flex-col items-center  bg-white dark:bg-dark-body dark:text-white px-6">
           <div className="w-full max-w-6xl mt-5">

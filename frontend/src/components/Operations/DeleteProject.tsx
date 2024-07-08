@@ -2,7 +2,7 @@ import { Button } from '../ui/button'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
-const DeletePost = () => {
+const DeleteProject = () => {
     const { id } = useParams<{ id: string }>()
     const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
     const handleDelete = async () => {
@@ -30,4 +30,4 @@ const DeletePost = () => {
   )
 }
 
-export default DeletePost
+export default DeleteProject

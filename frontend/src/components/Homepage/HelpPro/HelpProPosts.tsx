@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import Post from '../Post';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import HomeScreenLoading from '@/components/LoadingPages/HomeScreenLoading';
 
 interface PostType {
   id: number;
@@ -23,6 +24,15 @@ const HelpProPosts = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+
+    // Clear the timer if the component is unmounted
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(`${BACKEND_URL}/api/v1/project/all`, {
@@ -42,7 +52,9 @@ const HelpProPosts = () => {
   }, [BACKEND_URL]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>
+      <HomeScreenLoading />
+    </div>;
   }
 
   if (error) {
@@ -65,12 +77,12 @@ const HelpProPosts = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mt-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full h-full mt-4">
       {posts.map((post) => (
-        <div
-          key={post.id}
-          onClick={() => navigate(`/project/${post.id}`)}
-          className="cursor-pointer"
+        <Link to={`/project/${post.id}`}
+          // key={post.id}
+          // onClick={() => navigate(`/project/${post.id}`)}
+          // className="cursor-pointer block"
         >
           <Post
             title={post.title}
@@ -80,7 +92,7 @@ const HelpProPosts = () => {
             techstack={post.techstack}
             profile = {post.author.profilePic}
           />
-        </div>
+        </Link>
       ))}
     </div>
   );

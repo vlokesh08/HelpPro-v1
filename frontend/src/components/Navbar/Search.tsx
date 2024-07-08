@@ -1,29 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import axios from "axios";
+import { Search } from "lucide-react";
+import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import Follow from "../Follow";
 
-interface Post {
+interface UserProfile {
   id: number;
-  title: string;
-  description: string;
+  name: string;
+  username: string;
+  profilePic: string;
 }
 
-const Search: React.FC = () => {
-  const [query, setQuery] = useState<string>('');
-  const [results, setResults] = useState<Post[]>([]);
+const SearchComponent: React.FC = () => {
+  const [query, setQuery] = useState<string>("");
+  const [results, setResults] = useState<UserProfile[]>([]);
   const [showResults, setShowResults] = useState<boolean>(false);
-
   const BACKEND_URL: string = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const handleSearch = async () => {
       try {
-        const response = await axios.post<Post[]>(`${BACKEND_URL}/api/v1/search/search`, {
-          query: query
-        });
+        const response = await axios.get(
+          `${BACKEND_URL}/api/v1/user/search/${query}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         setResults(response.data);
+        console.log(response.data);
       } catch (error) {
-        console.error('Error searching posts', error);
+        console.error("Error searching posts", error);
       }
     };
 
@@ -37,26 +54,63 @@ const Search: React.FC = () => {
   }, [query]);
 
   return (
-    <div>
-      <Input
-        type="text"
-        placeholder="Search"
-        className="w-[450px]"
-        value={query}
-        onChange={(e) => { setQuery(e.target.value) }}
-      />
-      {showResults && (
-        <div className="w-[450px] absolute">
-          {results.map((post) => (
-            <div key={post.id} className="mb-2 p-2 border rounded bg-white">
-              <h2 className="text-2xl">{post.title}</h2>
-              <p>{post.description}</p>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="flex gap-2 font-spacegotesk">
+      <Dialog>
+        <DialogTrigger>
+          <Button variant="outline" size="icon" className="border-none">
+            <Search className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 " />
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="w-1/2">
+          <DialogHeader>
+            <DialogTitle className="font-spacegotesk">Search User Profiles</DialogTitle>
+            <DialogDescription>
+              <div className="w-full mt-2">
+                <Input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full border-slate-300 focus-visible:ring-neutral-200"
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                  }}
+                />
+                {showResults && (
+                  <div className="w-full mt-2 font-spacegotesk">
+                    {results.map((post) => (
+                    <a href={`/profile/${post.id}`}>
+                      <div
+                        key={post.id}
+                        className="mb-2 p-2 border rounded bg-white flex gap-3 items-center w-full"
+                      >
+                        <div>
+                          <img
+                            src={post.profilePic}
+                            alt="profile"
+                            className="w-10 h-10 rounded-full"
+                          />
+                        </div>
+                        <div className="flex justify-between w-full items-center">
+                          <div>
+                            <h2 className="text-2xl">{post.name}</h2>
+                            <p>@{post.username}</p>
+                          </div>
+                          <div>
+                            <Follow userId = {post.id.toString() ?? ""} />
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
 
-export default Search;
+export default SearchComponent;

@@ -3,12 +3,14 @@ import axios from "axios";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { set } from "date-fns";
+import { Skeleton } from "../ui/skeleton";
 const SocalMediaProfiles = () => {
   const [githubLink, setGithub] = React.useState<string>("");
   const [linkedin, setLinkedin] = React.useState<string>("");
   const [port, setPort] = React.useState<string>("");
+  const [loading, setLoading] = React.useState(true);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
   const user = localStorage.getItem("user");
   const userObj = JSON.parse(user as string);
   const userId = userObj.id;
@@ -22,7 +24,9 @@ const SocalMediaProfiles = () => {
         setGithub(data.data.githubLink);
         setLinkedin(data.data.linkedinLink);
         setPort(data.data.portfolio);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching social profiles", error);
       }
     };
@@ -43,6 +47,23 @@ const SocalMediaProfiles = () => {
       toast.error("Failed to save social profiles");
     }
   };
+
+  useEffect(() => {
+    // Set a timeout to update the loading state after 1 second (1000 milliseconds)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    // Clear the timer if the component is unmounted
+    return () => clearTimeout(timer);
+  }, []);
+
+  if(loading) {
+    return <div>
+      <Skeleton className="h-6 w-[80px]" />
+      <Skeleton className="h-6 w-[320px]" />
+    </div>
+  }
   return (
     <div className="dark:text-white">
       <h1 className="text-xl font-bold">Social Media Profiles</h1>

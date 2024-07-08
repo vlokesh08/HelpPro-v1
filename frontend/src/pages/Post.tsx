@@ -9,7 +9,8 @@ import EditPost from "@/components/Operations/EditPost";
 import DeletePost from "@/components/Operations/DeletePost";
 import { Toaster } from "sonner";
 import { Star } from "lucide-react";
-import LoadingPage from "./LoadingPage";
+import HomeScreenLoading from "@/components/LoadingPages/HomeScreenLoading";
+import IssuesLoading from "@/components/LoadingPages/IssuesLoading";
 
 interface Post {
   id: string;
@@ -76,7 +77,8 @@ const parseGitHubUrl = (url: string) => {
 const Post: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<Post | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [issuesLoading, setIssuesLoading] = useState<boolean>(false);
   const [issues, setIssues] = useState<GitHubIssue[]>([]);
   const [starCount, setStarCount] = useState<number>(0);
   const [topics, setTopics] = useState<string[]>([]);
@@ -116,6 +118,7 @@ const Post: React.FC = () => {
         if (parsedUrl) {
           const { owner, repo } = parsedUrl;
           try {
+            setIssuesLoading(true);
             const response = await axios.get<GitHubIssue[]>(`https://api.github.com/repos/${owner}/${repo}/issues`, {
               params: {
                 per_page: 10,
@@ -123,8 +126,10 @@ const Post: React.FC = () => {
               },
             });
             setIssues(response.data);
+            setIssuesLoading(false);
           } catch (err) {
             console.error(err);
+            setIssuesLoading(false);
             setError("Error fetching issues");
           }
         }
@@ -156,7 +161,7 @@ const Post: React.FC = () => {
   }, [post, page]);
 
   if (loading) {
-    return <LoadingPage />;
+    return <HomeScreenLoading />;
   }
 
   if (error) {
@@ -292,37 +297,44 @@ const Post: React.FC = () => {
             </div>
             <div>
               <h2 className="font-semibold text-lg">Issues</h2>
-              {issues.length > 0 ? (
-                <ul>
-                  {issues.map((issue) => (
-                    <li key={issue.id}>
-                      <Card className="my-3">
-                        <CardHeader>
-                          <CardTitle>
-                            <div className="flex justify-between">
-                              {issue.title}
-                              <Button className="ml-2">
-                                <a href={issue.html_url} target="__blank" rel="noopener noreferrer">
-                                  Open Issue
-                                </a>
-                              </Button>
-                            </div>
-                          </CardTitle>
-                          <CardDescription>By {issue.user?.login}</CardDescription>
-                        </CardHeader>
-                      </Card>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <Card className="my-3">
-                  <CardHeader className="flex justify-center">
-                    <CardTitle className="text-center">
-                      We found no issues for this repository
-                    </CardTitle>
-                  </CardHeader>
-                </Card>
-              )}
+              {
+                issuesLoading ? (
+                  <IssuesLoading />
+                ) : (
+                  issues.length > 0 ? (
+                    <ul>
+                      {issues.map((issue) => (
+                        <li key={issue.id}>
+                          <Card className="my-3">
+                            <CardHeader>
+                              <CardTitle>
+                                <div className="flex justify-between">
+                                  {issue.title}
+                                  <Button className="ml-2">
+                                    <a href={issue.html_url} target="__blank" rel="noopener noreferrer">
+                                      Open Issue
+                                    </a>
+                                  </Button>
+                                </div>
+                              </CardTitle>
+                              <CardDescription>By {issue.user?.login}</CardDescription>
+                            </CardHeader>
+                          </Card>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <Card className="my-3">
+                      <CardHeader className="flex justify-center">
+                        <CardTitle className="text-center">
+                          We found no issues for this repository
+                        </CardTitle>
+                      </CardHeader>
+                    </Card>
+                  )
+                )
+              }
+              
               <div className="flex gap-2">
                 <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
                   Previous

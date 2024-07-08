@@ -2,8 +2,8 @@ import LoginComponent from "@/components/LoginPage/LoginComponent";
 import SignupComponent from "@/components/LoginPage/SignupComponent";
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-const GITHUB_CLIENT_ID = "Ov23ct6yKrCQOfjkoGQP";
+import { Link, useNavigate } from "react-router-dom";
+const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user`;
 import { Toaster, toast } from "sonner";
 import Loading from "@/components/Loading";
@@ -70,7 +70,9 @@ const Login = () => {
       {/* Right Section */}
       <div className="flex-1 flex items-center rounded-2xl m-5 justify-center p-8 ">
         <div className="top-12 right-[435px] absolute">
+          <Link to="/landing">
           <h1 className=" text-button-clr font-bold text-5xl">HelpPro</h1>
+          </Link>
         </div>
         <div className="max-w-md w-full">
           <div className="space-y-4 ">

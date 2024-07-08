@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, ChangeEvent, useState } from "react";
 import { Input } from "../ui/input";
 import axios from "axios";
 import { Textarea } from "../ui/textarea";
@@ -17,41 +17,72 @@ const ProfileSection = () => {
   const user = localStorage.getItem("user");
   const userObj = JSON.parse(user as string);
   const userId = userObj.id;
-  const [userData, setUserData] = React.useState<User>({} as User);
-  const [username, setUsername] = React.useState<string>("");
-  const [name, setName] = React.useState<string>("");
-  const [bio, setBio] = React.useState<string>("");
-  const [profilePic, setProfilePic] = React.useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
+  const [profilePic, setProfilePic] = useState<string>("");
+  const [image, setImage] = useState<File | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await axios.get(`${BACKEND_URL}/api/v1/user/${userId}`);
-        console.log(userData);
-        setUserData(data.data[0]);
-        setUsername(data.data[0].username);
-        setName(data.data[0].name);
-        setBio(data.data[0].details);
-        setProfilePic(data.data[0].profilePic);
+        const { data } = await axios.get(`${BACKEND_URL}/api/v1/user/${userId}`);
+        console.log(data);
+        setUsername(data[0].username);
+        setName(data[0].name);
+        setBio(data[0].details);
+        setProfilePic(data[0].profilePic);
       } catch (error) {
         console.error("Error fetching social profiles", error);
       }
     };
     fetchData();
-  }, []);
+  }, [userId, BACKEND_URL]);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setImage(e.target.files[0]);
+      setProfilePic(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!image) return;
+
+    const formData = new FormData();
+    formData.append("file", image);
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/v1/upload/upload/${userId}`, {
+        method: "POST",
+        body: formData,
+      });
+
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      // console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleSave = async () => {
+
+    const formData = new FormData();
+    formData.append("file", image);
     try {
-      const data = await axios.put(`${BACKEND_URL}/api/v1/user/${userId}`, {
-        username: username,
-        name: name,
+      const { data } = await axios.put(`${BACKEND_URL}/api/v1/user/${userId}`, {
+        username,
+        name,
         details: bio,
-        profilePic: profilePic,
+        profilePic,
+        formData,
       });
       console.log(data);
     } catch (error) {
       console.error("Error saving social profiles", error);
     }
   };
+
   return (
     <div className="dark:text-white flex flex-col gap-3">
       <h1 className="text-xl font-bold">Profile</h1>
@@ -60,21 +91,41 @@ const ProfileSection = () => {
       </h4>
       <div>
         <div className="flex flex-col gap-2">
-          <div >
+          <div className="flex gap-5">
+            {/* <label htmlFor="profilePic" className="font-semibold">
+              Profile Picture
+            </label> */}
+            <div className="mt-1">
+              <img
+                src={profilePic}
+                alt="Profile"
+                className="w-24 h-24 rounded-full cursor-pointer"
+                onClick={() => document.getElementById("profilePicInput")?.click()}
+              />
+              <Input
+                type="file"
+                id="profilePicInput"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </div>
+            <div className="flex items-center">
+              <Button variant={"primary"} onClick={handleUpload} >Save Image</Button>
+            </div>
+          </div>
+          <div>
             <label htmlFor="username" className="font-semibold">
               Username
             </label>
             <Input
               type="text"
-              id="email"
+              id="username"
               className="mt-1"
               value={username}
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div >
+          <div>
             <label htmlFor="name" className="font-semibold">
               Name
             </label>
@@ -83,12 +134,9 @@ const ProfileSection = () => {
               id="name"
               className="mt-1"
               value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
-
           <div>
             <label htmlFor="bio" className="font-semibold">
               Bio
@@ -97,9 +145,7 @@ const ProfileSection = () => {
               id="bio"
               className="mt-1"
               value={bio}
-              onChange={(e) => {
-                setBio(e.target.value);
-              }}
+              onChange={(e) => setBio(e.target.value)}
             />
           </div>
           <div className="flex justify-end">

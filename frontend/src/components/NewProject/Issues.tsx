@@ -34,7 +34,7 @@ interface IssuesProps {
 const Issues: React.FC<IssuesProps> = ({ link }) => {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
@@ -67,8 +67,10 @@ const Issues: React.FC<IssuesProps> = ({ link }) => {
       } else {
         setTotalPages(1);
       }
+      setLoading(false);
     } catch (err) {
       setError("Error fetching issues");
+      setLoading(false);
       console.error(err);
     }
     setLoading(false);

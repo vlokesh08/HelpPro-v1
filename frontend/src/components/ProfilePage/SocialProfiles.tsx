@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Dialog,
     DialogContent,
@@ -13,6 +13,7 @@ import axios from "axios";
 import { Globe } from 'lucide-react';
 import { Linkedin } from 'lucide-react';
 import { Github } from 'lucide-react';
+import { Skeleton } from "../ui/skeleton";
 interface SocialProfilesProps {
   githubLink?: string;
   linkedinLink?: string;
@@ -42,12 +43,29 @@ const SocialProfiles = ({
                 linkedinLink: linkedin,
                 portfolio: port
             });
-
-
         } catch (error) {
             console.error("Error saving social profiles", error);
         }
     }
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+      // Set a timeout to update the loading state after 1 second (1000 milliseconds)
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+  
+      // Clear the timer if the component is unmounted
+      return () => clearTimeout(timer);
+    }, []);
+  
+    if (isLoading) {
+      return <div className="mt-2">
+        <Skeleton className="h-6 w-[180px]"  />
+        
+      </div>;
+    }
+
   return (
     <div className="mt-2  ">
       {noProfiles ? (
