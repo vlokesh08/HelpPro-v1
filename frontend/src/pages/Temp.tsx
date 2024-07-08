@@ -168,7 +168,6 @@ const Temp = () => {
               <h2 className="text-xl font-semibold text-slate-400">{userData?.subscribedTo?.length} following</h2>
               </div>
 
-              {/* <p className="mt-2">E-mail: {userData.email}</p> */}
             </section>
             <section>
               <h2 className="text-2xl font-bold">Contact Details</h2>

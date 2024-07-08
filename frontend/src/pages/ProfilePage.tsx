@@ -7,12 +7,10 @@ const ProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Set a timeout to update the loading state after 1 second (1000 milliseconds)
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
 
-    // Clear the timer if the component is unmounted
     return () => clearTimeout(timer);
   }, []);
 
@@ -24,7 +22,6 @@ const ProfilePage = () => {
   return (
     <div>
         <Navbar />
-        {/* <Profile /> */}
         <Temp />
     </div>
   )
