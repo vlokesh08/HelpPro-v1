@@ -4,11 +4,7 @@ import { Button } from "../ui/button";
 import MiniPosts from "../LoadingPages/MiniPosts";
 import { Pencil } from "lucide-react";
 import { Trash2 } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DeleteProject from "../Operations/DeleteProject";
 import EditProject from "../Operations/EditProject";
 
@@ -16,6 +12,9 @@ const HelpProProfilePosts = ({ userId }: { userId: string }) => {
   const [posts, setPosts] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
+  const user = localStorage.getItem("user");
+  const userObj = JSON.parse(user as string);
+  const loggedUserId = userObj.id;
   const user_id = userId;
   useEffect(() => {
     const fetchPosts = async () => {
@@ -50,19 +49,29 @@ const HelpProProfilePosts = ({ userId }: { userId: string }) => {
 
   if (posts.length === 0) {
     return (
-      <div className="w-full dark:bg-[#283445] h-[150px] flex justify-center align-middle items-center">
-        <div className="flex justify-center flex-col">
-          <h1 className=" text-lg font-semibold">You have No Posts!</h1>
-          <Button
-            className=""
-            variant={"primary"}
-            onClick={() => {
-              window.location.href = "/newproject";
-            }}
-          >
-            Create a Post
-          </Button>
-        </div>
+      <div>
+        {userId === loggedUserId ? (
+          <div className="w-full dark:bg-[#283445] h-[150px] flex justify-center align-middle items-center">
+            <div className="flex justify-center flex-col">
+              <h1 className=" text-lg font-semibold">You have No Posts!</h1>
+              <Button
+                className=""
+                variant={"primary"}
+                onClick={() => {
+                  window.location.href = "/newpost";
+                }}
+              >
+                Create a Post
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="w-full dark:bg-[#283445] h-[150px] flex justify-center align-middle items-center">
+            <div className="flex justify-center flex-col">
+              <h1 className=" text-lg font-semibold">No Posts Found!</h1>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -76,36 +85,37 @@ const HelpProProfilePosts = ({ userId }: { userId: string }) => {
         >
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold">{post.title}</h2>
-            <div className="flex gap-2">
-              <Dialog>
-                <DialogTrigger>
-                  <Button className="h-3/4">
-                    <Pencil className="h-[14px] w-[14px] mr-1" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="w-1/2">
-                  <EditProject />
-                </DialogContent>
-              </Dialog>
+            {user_id === loggedUserId && (
+              <div className="flex gap-2">
+                <Dialog>
+                  <DialogTrigger>
+                    <Button className="h-3/4">
+                      <Pencil className="h-[14px] w-[14px] mr-1" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="w-1/2">
+                    <EditProject />
+                  </DialogContent>
+                </Dialog>
 
-              <Dialog>
-                <DialogTrigger>
-                <Button className="h-3/4">
-                <Trash2 className="h-[14px] w-[14px] mr-1" />
-              </Button>
-                </DialogTrigger>
-                <DialogContent className="w-1/2">
-                  <DeleteProject />
-                </DialogContent>
-              </Dialog>
-
-            </div>
+                <Dialog>
+                  <DialogTrigger>
+                    <Button className="h-3/4">
+                      <Trash2 className="h-[14px] w-[14px] mr-1" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="w-1/2">
+                    <DeleteProject />
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
           </div>
           <p className="text-gray-500">{post.description}</p>
           {post.techstack.split(",").map((tech: any) => (
             <span
               key={post.id}
-              className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"
+              className="inline-flex mr-2 items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"
             >
               {tech}
             </span>

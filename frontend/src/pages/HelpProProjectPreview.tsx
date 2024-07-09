@@ -28,6 +28,7 @@ interface Post {
     name: string;
     username: string;
     profilePic: string;
+    verified: boolean;
   };
   completion: string;
 }
@@ -86,9 +87,11 @@ const HelpProProjectPreview: React.FC = () => {
         console.log(res.data.post);
         setPost(res.data.post);
         const user = {
+          id: res.data.post.authorId,
           name: res.data.post.author.name,
           username: res.data.post.author.username,
           avatar: res.data.post.author.profilePic,
+          verified : res.data.post.author.verified,
         };
         setUserDetails(user);
         setTechStack(res.data.post.techstack.split(","));

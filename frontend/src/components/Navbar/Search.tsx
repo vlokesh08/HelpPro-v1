@@ -12,12 +12,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Follow from "../Follow";
+import VerifiedButton from "../VerifiedButton";
 
 interface UserProfile {
   id: number;
   name: string;
   username: string;
   profilePic: string;
+  verified: boolean;
 }
 
 const SearchComponent: React.FC = () => {
@@ -54,7 +56,7 @@ const SearchComponent: React.FC = () => {
   }, [query]);
 
   return (
-    <div className="flex gap-2 font-spacegotesk">
+    <div className="flex gap-2 font-spacegotesk mr-3">
       <Dialog>
         <DialogTrigger>
           <Button variant="outline" size="icon" className="border-none">
@@ -92,7 +94,12 @@ const SearchComponent: React.FC = () => {
                         </div>
                         <div className="flex justify-between w-full items-center">
                           <div>
-                            <h2 className="text-2xl">{post.name}</h2>
+                            <div className="flex gap-1 items-center">
+                              <h2 className="text-2xl">{post.name}</h2>
+                              {post.verified && (
+                                <VerifiedButton />
+                              )}
+                            </div>
                             <p>@{post.username}</p>
                           </div>
                           <div>

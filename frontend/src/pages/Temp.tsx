@@ -10,7 +10,8 @@ import OpenSourceProfilePosts from "@/components/ProfilePage/OpenSourceProfilePo
 import SavedPosts from "@/components/ProfilePage/SavedPosts";
 import HomeScreenLoading from "@/components/LoadingPages/HomeScreenLoading";
 import Follow from "@/components/Follow";
-import { BadgeCheck, Flag } from "lucide-react";
+import { Flag } from "lucide-react";
+import VerifiedButton from "@/components/VerifiedButton";
 
 interface User {
   id: string;
@@ -30,7 +31,7 @@ interface Subscriber {
   createdAt: string;
 }
 
-interface SocialLinks {
+interface SocialLinks {   
   portfolio: string;
   githubLink: string;
   linkedinLink: string;
@@ -113,21 +114,7 @@ const Temp: React.FC = () => {
               <div className="flex gap-1 items-center">
                 <h1 className="text-3xl font-bold">{userData.name}</h1>
                 {userData.verified && (
-                  <div className="relative group inline-block">
-                    <BadgeCheck className="h-5 w-5 text-blue-500" />
-                    <div className="opacity-0 w-32 bg-gray-800 text-white text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 transition-opacity duration-300 bottom-full left-1/2 transform -translate-x-1/2 mb-2">
-                      Verified
-                      <svg
-                        className="absolute text-gray-800 h-2 w-full left-0 top-full"
-                        viewBox="0 0 255 255"
-                      >
-                        <polygon
-                          className="fill-current"
-                          points="0,0 127.5,127.5 255,0"
-                        />
-                      </svg>
-                    </div>
-                  </div>
+                  <VerifiedButton />
                 )}
               </div>
               <p className="text-gray-600">@{userData.username}</p>
@@ -195,6 +182,7 @@ const Temp: React.FC = () => {
               <h2 className="text-2xl font-bold">Contact Details</h2>
               <div className="flex flex-col">
                 <SocialProfiles
+                  userId = {userId ?? ""}
                   githubLink={socialLinks.githubLink}
                   linkedinLink={socialLinks.linkedinLink}
                   portfolio={socialLinks.portfolio}

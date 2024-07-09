@@ -14,7 +14,6 @@ export default function NotificationToggle() {
 
   return (
     <div className="">
-
       <DropdownMenu>
         <DropdownMenuTrigger className="border-none" asChild>
           <Button variant="outline" size="icon" className="border-none" >

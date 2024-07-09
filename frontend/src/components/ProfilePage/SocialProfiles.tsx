@@ -18,9 +18,11 @@ interface SocialProfilesProps {
   githubLink?: string;
   linkedinLink?: string;
   portfolio?: string;
+  userId: string;
 }
 
 const SocialProfiles = ({
+  userId,
   githubLink,
   linkedinLink,
   portfolio,
@@ -29,7 +31,9 @@ const SocialProfiles = ({
     const [linkedin, setLinkedin] = React.useState<string>('');
     const [port, setPort] = React.useState<string>('');
     const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
+    const user = localStorage.getItem("user");
+    const userObj = JSON.parse(user as string);
+    const loggedinUser = userObj.id;
   const noProfiles =
     !githubLink && !linkedinLink && !portfolio;
 
@@ -68,7 +72,12 @@ const SocialProfiles = ({
 
   return (
     <div className="mt-2  ">
-      {noProfiles ? (
+      {
+        noProfiles && userId!==loggedinUser && (
+          <div className="text-gray-500">No social media profiles added</div>
+        )
+      }
+      {noProfiles && userId===loggedinUser ? (
         <Dialog>
         <DialogTrigger><Button variant={"primary"}>Add Social Media Profiles</Button></DialogTrigger>
         <DialogContent>

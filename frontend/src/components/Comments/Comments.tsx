@@ -5,11 +5,13 @@ import { Button } from "../ui/button";
 import { useParams } from "react-router-dom";
 import CommentList from "./CommentList";
 import { Comment, Reply } from "./Interfaces";
+import MiniPosts from "../LoadingPages/MiniPosts";
 
 const Comments: React.FC = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const { id } = useParams<{ id: string }>();
   const [comments, setComments] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState(false);
   const [newComment, setNewComment] = useState<string>("");
   const [editingComment, setEditingComment] = useState<Comment | null>(null);
   const [editingReply, setEditingReply] = useState<Reply | null>(null);
@@ -23,12 +25,14 @@ const Comments: React.FC = () => {
 
   const fetchComments = async () => {
     try {
+      setLoading(true); 
       const response = await axios.get<Comment[]>(
         `${BACKEND_URL}/api/v1/comments/post/${postId}/comments`
       );
       setComments(response.data);
-      console.log(response.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error("Error fetching comments:", error);
     }
   };
@@ -151,6 +155,12 @@ const Comments: React.FC = () => {
       console.error("Error deleting reply:", error);
     }
   };
+
+  if(loading) {
+    return (
+      <MiniPosts />
+    )
+  }
 
   return (
     <div className="App">
