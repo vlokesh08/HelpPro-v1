@@ -10,7 +10,7 @@ import OpenSourceProfilePosts from "@/components/ProfilePage/OpenSourceProfilePo
 import SavedPosts from "@/components/ProfilePage/SavedPosts";
 import HomeScreenLoading from "@/components/LoadingPages/HomeScreenLoading";
 import Follow from "@/components/Follow";
-import { Flag } from "lucide-react";
+import { BadgeCheck, Flag } from "lucide-react";
 
 interface User {
   id: string;
@@ -20,6 +20,7 @@ interface User {
   profilePic: string;
   subscribedTo: Subscriber[];
   subscribers: Subscriber[];
+  verified: boolean;
 }
 
 interface Subscriber {
@@ -43,14 +44,18 @@ const Temp: React.FC = () => {
   const loggedUserId = userObj.id;
 
   const [userData, setUserData] = useState<User>({} as User);
-  const [socialLinks, setSocialLinks] = useState<SocialLinks>({} as SocialLinks);
+  const [socialLinks, setSocialLinks] = useState<SocialLinks>(
+    {} as SocialLinks
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get<User[]>(`${BACKEND_URL}/api/v1/user/${userId}`);
+        const response = await axios.get<User[]>(
+          `${BACKEND_URL}/api/v1/user/${userId}`
+        );
         setUserData(response.data[0]);
       } catch (error) {
         console.error("Error fetching user data", error);
@@ -62,7 +67,9 @@ const Temp: React.FC = () => {
     const getLinks = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get<SocialLinks>(`${BACKEND_URL}/api/v1/user/social/${userId}`);
+        const response = await axios.get<SocialLinks>(
+          `${BACKEND_URL}/api/v1/user/social/${userId}`
+        );
         setSocialLinks(response.data);
       } catch (error) {
         console.error("Error fetching social links", error);
@@ -93,14 +100,36 @@ const Temp: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-start md:space-x-6 w-full">
           <div className="absolute top-[150px] left-[70px] lg:left-[150px] w-[120px] h-[120px] lg:w-[150px] lg:h-[150px]">
             <img
-              src={userData.profilePic || "https://avatars.githubusercontent.com/u/124599?v=4"}
+              src={
+                userData.profilePic ||
+                "https://avatars.githubusercontent.com/u/124599?v=4"
+              }
               alt="Profile"
               className="rounded-full border-4 border-white"
             />
           </div>
           <div className="flex pr-20 pl-20 md:flex-row flex-col justify-between w-full">
             <div className="mt-4 md:mt-0 ml-[130px] text-center md:text-left">
-              <h1 className="text-3xl font-bold">{userData.name}</h1>
+              <div className="flex gap-1 items-center">
+                <h1 className="text-3xl font-bold">{userData.name}</h1>
+                {userData.verified && (
+                  <div className="relative group inline-block">
+                    <BadgeCheck className="h-5 w-5 text-blue-500" />
+                    <div className="opacity-0 w-32 bg-gray-800 text-white text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 transition-opacity duration-300 bottom-full left-1/2 transform -translate-x-1/2 mb-2">
+                      Verified
+                      <svg
+                        className="absolute text-gray-800 h-2 w-full left-0 top-full"
+                        viewBox="0 0 255 255"
+                      >
+                        <polygon
+                          className="fill-current"
+                          points="0,0 127.5,127.5 255,0"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </div>
               <p className="text-gray-600">@{userData.username}</p>
             </div>
             <div className="flex space-x-4">
@@ -122,12 +151,17 @@ const Temp: React.FC = () => {
             <section className="bg-white dark:bg-dark-box rounded-xl p-5">
               <h2 className="text-2xl font-bold">Posts</h2>
               <div className="flex justify-start">
-                <Tabs defaultValue="account" className="w-full mt-4 flex flex-col justify-start">
+                <Tabs
+                  defaultValue="account"
+                  className="w-full mt-4 flex flex-col justify-start"
+                >
                   <div className="flex justify-start">
                     <TabsList className="dark:bg-[#44546b]">
                       <TabsTrigger value="account">Projects</TabsTrigger>
                       <TabsTrigger value="password">OpenSource</TabsTrigger>
-                      {userId === loggedUserId && <TabsTrigger value="saved">Saved</TabsTrigger>}
+                      {userId === loggedUserId && (
+                        <TabsTrigger value="saved">Saved</TabsTrigger>
+                      )}
                     </TabsList>
                   </div>
                   <TabsContent value="account">
@@ -149,8 +183,12 @@ const Temp: React.FC = () => {
           <aside className="md:col-span-1 space-y-6 bg-white dark:bg-dark-box rounded-xl p-5 h-[250px]">
             <section>
               <div className="flex gap-3">
-                <h2 className="text-xl font-semibold text-slate-400">{userData.subscribers?.length} followers</h2>
-                <h2 className="text-xl font-semibold text-slate-400">{userData.subscribedTo?.length} following</h2>
+                <h2 className="text-xl font-semibold text-slate-400">
+                  {userData.subscribers?.length} followers
+                </h2>
+                <h2 className="text-xl font-semibold text-slate-400">
+                  {userData.subscribedTo?.length} following
+                </h2>
               </div>
             </section>
             <section>
