@@ -1,26 +1,12 @@
 import React, { ChangeEvent } from "react";
-
-interface Author {
-  id: number;
-  name: string;
-  profilePic: string;
-}
-
-interface Reply {
-  id: number;
-  content: string;
-  authorId: number;
-  commentId: number;
-  author: Author;
-  createdAt: string;
-}
+import { Reply } from "./Interfaces";
 
 interface ReplyItemProps {
   reply: Reply;
-  commentId: number;
-  setEditingReply: React.Dispatch<React.SetStateAction<Reply | null>>;
-  handleEditReply: (replyId: number, commentId: number) => void;
-  handleDeleteReply: (replyId: number, commentId: number) => void;
+  commentId: string;
+  setEditingReply: React.Dispatch<any>;
+  handleEditReply: (replyId: string, commentId: string) => void;
+  handleDeleteReply: (replyId: string, commentId: string) => void;
   isEditingReply: boolean;
   setIsEditingReply: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -30,7 +16,6 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
   commentId,
   setEditingReply,
   handleEditReply,
-  handleDeleteReply,
   isEditingReply,
   setIsEditingReply,
 }) => {

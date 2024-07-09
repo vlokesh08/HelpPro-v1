@@ -11,41 +11,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-
-interface Author {
-  id: number;
-  name: string;
-  profilePic: string;
-}
-
-interface Reply {
-  id: number;
-  content: string;
-  authorId: number;
-  commentId: number;
-  author: Author;
-  createdAt: string;
-}
-
-interface Comment {
-  id: number;
-  content: string;
-  postId: number;
-  authorId: number;
-  author: Author;
-  replies: Reply[];
-  createdAt: string;
-}
+import { Comment, Reply } from "./Interfaces";
 
 interface CommentItemProps {
   comment: Comment;
   setEditingComment: React.Dispatch<React.SetStateAction<Comment | null>>;
   setEditingReply: React.Dispatch<React.SetStateAction<Reply | null>>;
-  handleEditComment: (commentId: number) => void;
-  handleDeleteComment: (commentId: number) => void;
-  handleAddReply: (commentId: number, replyContent: string) => void;
-  handleEditReply: (replyId: number, commentId: number) => void;
-  handleDeleteReply: (replyId: number, commentId: number) => void;
+  handleEditComment: (commentId: string) => void;
+  handleDeleteComment: (commentId: string) => void;
+  handleAddReply: (commentId: string, replyContent: string) => void;
+  handleEditReply: (replyId: string, commentId: string) => void;
+  handleDeleteReply: (replyId: string, commentId: string) => void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({

@@ -1,22 +1,23 @@
 export interface Author {
-    id: number;
+    id: string;
     name: string;
     profilePic: string;
   }
   
   export interface Reply {
-    id: number;
+    id: string;
     content: string;
-    authorId: number;
-    commentId: number;
+    authorId: string;
+    commentId: string;
     author: Author;
+    createdAt: string;
   }
   
  export interface Comment {
-    id: number;
+    id: string;
     content: string;
-    postId: number;
-    authorId: number;
+    postId: string;
+    authorId: string;
     author: Author;
     replies: Reply[];
     createdAt: string;  

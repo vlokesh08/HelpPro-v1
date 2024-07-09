@@ -90,14 +90,6 @@ function App() {
             </PrivateRoute>
           }
         />
-        {/* <Route
-          path="/upload"
-          element={
-            <PrivateRoute>
-              <Upload />
-            </PrivateRoute>
-          }
-        /> */}
       </Routes>
     </div>
     <div className="md:hidden block">

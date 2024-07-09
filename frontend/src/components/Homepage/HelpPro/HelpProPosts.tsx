@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Post from '../Post';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import HomeScreenLoading from '@/components/LoadingPages/HomeScreenLoading';
 
 interface PostType {
@@ -21,7 +21,6 @@ const HelpProPosts = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {

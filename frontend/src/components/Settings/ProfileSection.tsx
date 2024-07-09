@@ -1,32 +1,39 @@
-import React, { useEffect, ChangeEvent, useState } from "react";
+import { useEffect, ChangeEvent, useState } from "react";
 import { Input } from "../ui/input";
 import axios from "axios";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
+// Define a type for the user
 interface User {
-  id: number;
+  id: string;
   username: string;
   name: string;
   details: string;
   profilePic: string;
 }
 
+// Define a type for the response data from the fetch and save requests
+interface UserDataResponse {
+  user: User;
+}
+
 const ProfileSection = () => {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
   const user = localStorage.getItem("user");
-  const userObj = JSON.parse(user as string);
+  const userObj: User = JSON.parse(user as string);
   const userId = userObj.id;
-  const [username, setUsername] = useState<string>("");
-  const [name, setName] = useState<string>("");
-  const [bio, setBio] = useState<string>("");
-  const [profilePic, setProfilePic] = useState<string>("");
+  
+  const [username, setUsername] = useState<string>(userObj.username || "");
+  const [name, setName] = useState<string>(userObj.name || "");
+  const [bio, setBio] = useState<string>(userObj.details || "");
+  const [profilePic, setProfilePic] = useState<string>(userObj.profilePic || "");
   const [image, setImage] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`${BACKEND_URL}/api/v1/user/${userId}`);
+        const { data } = await axios.get<User[]>(`${BACKEND_URL}/api/v1/user/${userId}`);
         console.log(data);
         setUsername(data[0].username);
         setName(data[0].name);
@@ -53,31 +60,24 @@ const ProfileSection = () => {
     formData.append("file", image);
 
     try {
-      const response = await fetch(`${BACKEND_URL}/api/v1/upload/upload/${userId}`, {
-        method: "POST",
-        body: formData,
-      });
-
+      const response = await axios.post<UserDataResponse>(`${BACKEND_URL}/api/v1/upload/upload/${userId}`, formData);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      // console.log(response);
+      // Optionally update state with new user data if needed
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleSave = async () => {
-
-    const formData = new FormData();
-    formData.append("file", image);
     try {
-      const { data } = await axios.put(`${BACKEND_URL}/api/v1/user/${userId}`, {
+      const { data } = await axios.put<User>(`${BACKEND_URL}/api/v1/user/${userId}`, {
         username,
         name,
         details: bio,
         profilePic,
-        formData,
       });
       console.log(data);
+      // Optionally update localStorage and state with new user data if needed
     } catch (error) {
       console.error("Error saving social profiles", error);
     }
@@ -86,15 +86,10 @@ const ProfileSection = () => {
   return (
     <div className="dark:text-white flex flex-col gap-3">
       <h1 className="text-xl font-bold">Profile</h1>
-      <h4 className="text-gray-500">
-        Your profile settings and privacy preferences
-      </h4>
+      <h4 className="text-gray-500">Your profile settings and privacy preferences</h4>
       <div>
         <div className="flex flex-col gap-2">
           <div className="flex gap-5">
-            {/* <label htmlFor="profilePic" className="font-semibold">
-              Profile Picture
-            </label> */}
             <div className="mt-1">
               <img
                 src={profilePic}
@@ -110,13 +105,11 @@ const ProfileSection = () => {
               />
             </div>
             <div className="flex items-center">
-              <Button variant={"primary"} onClick={handleUpload} >Save Image</Button>
+              <Button variant="primary" onClick={handleUpload}>Save Image</Button>
             </div>
           </div>
           <div>
-            <label htmlFor="username" className="font-semibold">
-              Username
-            </label>
+            <label htmlFor="username" className="font-semibold">Username</label>
             <Input
               type="text"
               id="username"
@@ -126,9 +119,7 @@ const ProfileSection = () => {
             />
           </div>
           <div>
-            <label htmlFor="name" className="font-semibold">
-              Name
-            </label>
+            <label htmlFor="name" className="font-semibold">Name</label>
             <Input
               type="text"
               id="name"
@@ -138,9 +129,7 @@ const ProfileSection = () => {
             />
           </div>
           <div>
-            <label htmlFor="bio" className="font-semibold">
-              Bio
-            </label>
+            <label htmlFor="bio" className="font-semibold">Bio</label>
             <Textarea
               id="bio"
               className="mt-1"
@@ -149,10 +138,7 @@ const ProfileSection = () => {
             />
           </div>
           <div className="flex justify-end">
-            <Button
-              className="bg-[#3a86ff] text-white px-4 py-2 rounded-lg"
-              onClick={handleSave}
-            >
+            <Button className="bg-[#3a86ff] text-white px-4 py-2 rounded-lg" onClick={handleSave}>
               Save
             </Button>
           </div>

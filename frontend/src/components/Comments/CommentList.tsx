@@ -1,16 +1,16 @@
 import React from "react";
 import CommentItem from "./CommentItem";
-import { Comment, Reply } from "./Interfaces";
+import { Comment } from "./Interfaces";
 
 interface CommentListProps {
   comments: Comment[];
-  setEditingComment: React.Dispatch<React.SetStateAction<Comment | null>>;
-  setEditingReply: React.Dispatch<React.SetStateAction<Reply | null>>;
-  handleEditComment: (commentId: number) => void;
-  handleDeleteComment: (commentId: number) => void;
-  handleAddReply: (commentId: number, replyContent: string) => void;
-  handleEditReply: (replyId: number, commentId: number) => void;
-  handleDeleteReply: (replyId: number, commentId: number) => void;
+  setEditingComment: React.Dispatch<any>;
+  setEditingReply: React.Dispatch<any>;
+  handleEditComment: (commentId: string) => void;
+  handleDeleteComment: (commentId: string) => void;
+  handleAddReply: (commentId: string, replyContent: string) => void;
+  handleEditReply: (replyId: string, commentId: string) => void;
+  handleDeleteReply: (replyId: string, commentId: string) => void;
 }
 
 const CommentList: React.FC<CommentListProps> = ({

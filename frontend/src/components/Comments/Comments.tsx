@@ -4,30 +4,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useParams } from "react-router-dom";
 import CommentList from "./CommentList";
-
-interface Author {
-  id: number;
-  name: string;
-  profilePic: string;
-}
-
-interface Reply {
-  id: number;
-  content: string;
-  authorId: number;
-  commentId: number;
-  author: Author;
-}
-
-interface Comment {
-  id: number;
-  content: string;
-  postId: number;
-  authorId: number;
-  author: Author;
-  replies: Reply[];
-  createdAt: string;
-}
+import { Comment, Reply } from "./Interfaces";
 
 const Comments: React.FC = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -73,7 +50,7 @@ const Comments: React.FC = () => {
     }
   };
 
-  const handleEditComment = async (commentId: number) => {
+  const handleEditComment = async (commentId: string) => {
     if (!editingComment) return;
     try {
       const response = await axios.put<Comment>(
@@ -93,7 +70,7 @@ const Comments: React.FC = () => {
     }
   };
 
-  const handleDeleteComment = async (commentId: number) => {
+  const handleDeleteComment = async (commentId: string) => {
     try {
       await axios.delete(
         `${BACKEND_URL}/api/v1/comments/delete-comment/${commentId}`
@@ -104,7 +81,7 @@ const Comments: React.FC = () => {
     }
   };
 
-  const handleAddReply = async (commentId: number, replyContent : string ) => {
+  const handleAddReply = async (commentId: string, replyContent : string ) => {
     try {
       const response = await axios.post<Reply>(
         `${BACKEND_URL}/api/v1/comments/add-reply`,
@@ -126,7 +103,7 @@ const Comments: React.FC = () => {
     }
   };
 
-  const handleEditReply = async (replyId: number, commentId: number) => {
+  const handleEditReply = async (replyId: string, commentId: string) => {
     if (!editingReply) return;
     try {
       const response = await axios.put<Reply>(
@@ -153,7 +130,7 @@ const Comments: React.FC = () => {
     }
   };
 
-  const handleDeleteReply = async (replyId: number, commentId: number) => {
+  const handleDeleteReply = async (replyId: string, commentId: string) => {
     try {
       await axios.delete(
         `${BACKEND_URL}/api/v1/comments/delete-reply/${replyId}`
