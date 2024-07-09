@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import SocialProfiles from "@/components/ProfilePage/SocialProfiles";
 import AboutSection from "@/components/ProfilePage/AboutSection";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,12 +9,11 @@ import HelpProProfilePosts from "@/components/ProfilePage/HelpProProfilePosts";
 import OpenSourceProfilePosts from "@/components/ProfilePage/OpenSourceProfilePosts";
 import SavedPosts from "@/components/ProfilePage/SavedPosts";
 import HomeScreenLoading from "@/components/LoadingPages/HomeScreenLoading";
-import { useParams } from "react-router-dom";
 import Follow from "@/components/Follow";
 import { Flag } from "lucide-react";
 
 interface User {
-  id: number;
+  id: string;
   name: string;
   username: string;
   details: string;
@@ -23,10 +23,10 @@ interface User {
 }
 
 interface Subscriber {
-  id : string,
-  subscriberId: string,
-  userId : string,
-  createdAt: string,
+  id: string;
+  subscriberId: string;
+  userId: string;
+  createdAt: string;
 }
 
 interface SocialLinks {
@@ -35,50 +35,45 @@ interface SocialLinks {
   linkedinLink: string;
 }
 
-const Temp = () => {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-  const userId = useParams<{ id: string }>().id;
+const Temp: React.FC = () => {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
+  const { id: userId } = useParams<{ id: string }>();
   const user = localStorage.getItem("user");
-  const userObj = JSON.parse(user as string);
+  const userObj: User = JSON.parse(user as string);
   const loggedUserId = userObj.id;
-  const [userData, setUserData] = React.useState<User>({} as User);
-  const [socialLinks, setSocialLinks] = React.useState<SocialLinks>(
-    {} as SocialLinks
-  );
+
+  const [userData, setUserData] = useState<User>({} as User);
+  const [socialLinks, setSocialLinks] = useState<SocialLinks>({} as SocialLinks);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(userId, loggedUserId);
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          `${BACKEND_URL}/api/v1/user/${userId}`
-        );
-        console.log(response.data);
+        const response = await axios.get<User[]>(`${BACKEND_URL}/api/v1/user/${userId}`);
         setUserData(response.data[0]);
       } catch (error) {
-        console.error("Error fetching courses", error);
+        console.error("Error fetching user data", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     const getLinks = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          `${BACKEND_URL}/api/v1/user/social/${userId}`
-        );
-        console.log(response.data);
+        const response = await axios.get<SocialLinks>(`${BACKEND_URL}/api/v1/user/social/${userId}`);
         setSocialLinks(response.data);
       } catch (error) {
-        console.error("Error fetching courses", error);
+        console.error("Error fetching social links", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    getLinks();
     fetchData();
-    setIsLoading(false);
-  }, []);
+    getLinks();
+  }, [userId, BACKEND_URL]);
 
   if (isLoading) {
     return (
@@ -89,21 +84,16 @@ const Temp = () => {
   }
 
   return (
-    <div className=" min-h-screen bg-gray-100 dark:bg-[#212c3c] dark:text-white font-spacegotesk">
-      <header className="bg-cover bg-center h-40   bg-blue-400">
-        <div className="container mx-auto p-6 flex justify-between items-center">
-          {/* <input type="text" placeholder="Search" className="border p-2 rounded-md"/> */}
-        </div>
+    <div className="min-h-screen bg-gray-100 dark:bg-[#212c3c] dark:text-white font-spacegotesk">
+      <header className="bg-cover bg-center h-40 bg-blue-400">
+        <div className="container mx-auto p-6 flex justify-between items-center"></div>
       </header>
 
       <div className="container mx-auto p-6 w-full">
-        <div className="flex flex-col  md:flex-row md:items-start md:space-x-6 w-full">
+        <div className="flex flex-col md:flex-row md:items-start md:space-x-6 w-full">
           <div className="absolute top-[150px] left-[70px] lg:left-[150px] w-[120px] h-[120px] lg:w-[150px] lg:h-[150px]">
             <img
-              src={
-                userData.profilePic ||
-                "https://avatars.githubusercontent.com/u/124599?v=4"
-              }
+              src={userData.profilePic || "https://avatars.githubusercontent.com/u/124599?v=4"}
               alt="Profile"
               className="rounded-full border-4 border-white"
             />
@@ -132,17 +122,12 @@ const Temp = () => {
             <section className="bg-white dark:bg-dark-box rounded-xl p-5">
               <h2 className="text-2xl font-bold">Posts</h2>
               <div className="flex justify-start">
-                <Tabs
-                  defaultValue="account"
-                  className="w-full mt-4 flex flex-col justify-start"
-                >
+                <Tabs defaultValue="account" className="w-full mt-4 flex flex-col justify-start">
                   <div className="flex justify-start">
                     <TabsList className="dark:bg-[#44546b]">
                       <TabsTrigger value="account">Projects</TabsTrigger>
                       <TabsTrigger value="password">OpenSource</TabsTrigger>
-                      {userId === loggedUserId ? (
-                        <TabsTrigger value="saved">Saved</TabsTrigger>
-                      ) : null}
+                      {userId === loggedUserId && <TabsTrigger value="saved">Saved</TabsTrigger>}
                     </TabsList>
                   </div>
                   <TabsContent value="account">
@@ -151,11 +136,11 @@ const Temp = () => {
                   <TabsContent value="password">
                     <OpenSourceProfilePosts userId={userId ?? ""} />
                   </TabsContent>
-                  {userId === loggedUserId ? (
+                  {userId === loggedUserId && (
                     <TabsContent value="saved">
-                      <SavedPosts userId={userId ?? ''} />
+                      <SavedPosts userId={userId ?? ""} />
                     </TabsContent>
-                  ) : null}
+                  )}
                 </Tabs>
               </div>
             </section>
@@ -164,14 +149,13 @@ const Temp = () => {
           <aside className="md:col-span-1 space-y-6 bg-white dark:bg-dark-box rounded-xl p-5 h-[250px]">
             <section>
               <div className="flex gap-3">
-              <h2 className="text-xl font-semibold text-slate-400">{userData?.subscribers?.length} followers</h2>
-              <h2 className="text-xl font-semibold text-slate-400">{userData?.subscribedTo?.length} following</h2>
+                <h2 className="text-xl font-semibold text-slate-400">{userData.subscribers?.length} followers</h2>
+                <h2 className="text-xl font-semibold text-slate-400">{userData.subscribedTo?.length} following</h2>
               </div>
-
             </section>
             <section>
               <h2 className="text-2xl font-bold">Contact Details</h2>
-              <div className=" flex flex-col">
+              <div className="flex flex-col">
                 <SocialProfiles
                   githubLink={socialLinks.githubLink}
                   linkedinLink={socialLinks.linkedinLink}
