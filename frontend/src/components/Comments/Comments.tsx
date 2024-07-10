@@ -13,7 +13,6 @@ const Comments: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(false);
   const [newComment, setNewComment] = useState<string>("");
-  const [editingComment, setEditingComment] = useState<Comment | null>(null);
   const [editingReply, setEditingReply] = useState<Reply | null>(null);
   const postId = id;
   const user = localStorage.getItem("user") || "{}";
@@ -56,6 +55,7 @@ const Comments: React.FC = () => {
 
   const handleEditComment = async (commentId: string, editedComment: string) => {
     if (!editedComment) return;
+
     try {
       const response = await axios.put<Comment>(
         `${BACKEND_URL}/api/v1/comments/edit-comment/${commentId}`,
@@ -69,7 +69,6 @@ const Comments: React.FC = () => {
           comment.id === commentId ? response.data : comment
         )
       );
-      setEditingComment(null);
     } catch (error) {
       console.error("Error editing comment:", error);
     }
@@ -178,7 +177,6 @@ const Comments: React.FC = () => {
       </div>
       <CommentList
         comments={comments}
-        setEditingComment={setEditingComment}
         setEditingReply={setEditingReply}
         handleEditComment={handleEditComment}
         handleDeleteComment={handleDeleteComment}

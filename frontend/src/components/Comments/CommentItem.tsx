@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import ReplyItem from "./ReplyItem";
 import { MessageCircleMore } from "lucide-react";
 import timeAgo from "@/utils/timeCalculator";
@@ -16,7 +16,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface CommentItemProps {
   comment: Comment;
-  setEditingComment: React.Dispatch<React.SetStateAction<Comment | null>>;
   setEditingReply: React.Dispatch<React.SetStateAction<Reply | null>>;
   handleEditComment: (commentId: string,editedComment: string) => void;
   handleDeleteComment: (commentId: string) => void;
@@ -27,7 +26,6 @@ interface CommentItemProps {
 
 const CommentItem: React.FC<CommentItemProps> = ({
   comment,
-  setEditingComment,
   setEditingReply,
   handleEditComment,
   handleDeleteComment,

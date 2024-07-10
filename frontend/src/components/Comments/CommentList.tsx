@@ -4,7 +4,6 @@ import { Comment } from "./Interfaces";
 
 interface CommentListProps {
   comments: Comment[];
-  setEditingComment: React.Dispatch<any>;
   setEditingReply: React.Dispatch<any>;
   handleEditComment: (commentId: string, editedComment: string) => void;
   handleDeleteComment: (commentId: string) => void;
@@ -15,7 +14,6 @@ interface CommentListProps {
 
 const CommentList: React.FC<CommentListProps> = ({
   comments,
-  setEditingComment,
   setEditingReply,
   handleEditComment,
   handleDeleteComment,
@@ -29,7 +27,6 @@ const CommentList: React.FC<CommentListProps> = ({
         <CommentItem
           key={comment.id}
           comment={comment}
-          setEditingComment={setEditingComment}
           setEditingReply={setEditingReply}
           handleEditComment={handleEditComment}
           handleDeleteComment={handleDeleteComment}
