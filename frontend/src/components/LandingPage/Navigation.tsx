@@ -18,7 +18,9 @@ const Navigation = () => {
             </div>
             <div className="flex gap-3">
                 <ThemeToggle />
-                <Button className="bg-button-clr" >Get Started</Button>
+                <a href="/login">
+                  <Button className="bg-button-clr" >Get Started</Button>
+                </a>
             </div>
 
           </div>

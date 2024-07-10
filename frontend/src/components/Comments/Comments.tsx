@@ -54,15 +54,16 @@ const Comments: React.FC = () => {
     }
   };
 
-  const handleEditComment = async (commentId: string) => {
-    if (!editingComment) return;
+  const handleEditComment = async (commentId: string, editedComment: string) => {
+    if (!editedComment) return;
     try {
       const response = await axios.put<Comment>(
         `${BACKEND_URL}/api/v1/comments/edit-comment/${commentId}`,
         {
-          content: editingComment.content,
+          content: editedComment,
         }
       );
+
       setComments(
         comments.map((comment) =>
           comment.id === commentId ? response.data : comment
@@ -95,6 +96,7 @@ const Comments: React.FC = () => {
           authorId: userId,
         }
       );
+      console.log(response.data);
       setComments(
         comments.map((comment) =>
           comment.id === commentId
@@ -102,6 +104,7 @@ const Comments: React.FC = () => {
             : comment
         )
       );
+      setEditingReply(null);
     } catch (error) {
       console.error("Error adding reply:", error);
     }

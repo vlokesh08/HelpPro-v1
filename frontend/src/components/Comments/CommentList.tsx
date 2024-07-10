@@ -6,7 +6,7 @@ interface CommentListProps {
   comments: Comment[];
   setEditingComment: React.Dispatch<any>;
   setEditingReply: React.Dispatch<any>;
-  handleEditComment: (commentId: string) => void;
+  handleEditComment: (commentId: string, editedComment: string) => void;
   handleDeleteComment: (commentId: string) => void;
   handleAddReply: (commentId: string, replyContent: string) => void;
   handleEditReply: (replyId: string, commentId: string) => void;

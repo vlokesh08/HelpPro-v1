@@ -1,4 +1,4 @@
-import { UserPlus } from 'lucide-react';
+import { Loader2, UserPlus } from 'lucide-react';
 import React from 'react';
 import { useSubscribe } from "../hooks/subscriber"; // Adjust the path as necessary
 import { Button } from './ui/button';
@@ -18,7 +18,10 @@ const Follow: React.FC<FollowButtonProps> = ({ userId, className }) => {
 
   if(loading) {
     return(
-      <Skeleton className='w-20 h-4 rounded-md' />
+      <Button disabled className="text-sm">
+      <Loader2 className="mr-2 h-[18px] w-[18px] animate-spin " />
+      Loading
+    </Button>
     )
   }
 
