@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import axios from "axios";
-import { Search } from "lucide-react";
+import { Search, SearchIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -59,13 +59,18 @@ const SearchComponent: React.FC = () => {
     <div className="flex gap-2 font-spacegotesk mr-3">
       <Dialog>
         <DialogTrigger>
-          <Button variant="outline" size="icon" className="border-none">
-            <Search className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 " />
+          <Button variant="outline" size="icon" className="border-none dark:bg-dark-box">
+            <div className="hidden dark:block">
+              <Search color="white" className="h-[1.2rem] w-[1.2rem] rotate-0 transition-all " />
+            </div>
+            <div className="block dark:hidden">
+              <Search color="black" className="h-[1.2rem] w-[1.2rem] rotate-0 transition-all " />
+            </div>
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-1/2">
+        <DialogContent className="w-1/2 bg-searchBG border-none bg-cover top-[40%]">
           <DialogHeader>
-            <DialogTitle className="font-spacegotesk">Search User Profiles</DialogTitle>
+            <DialogTitle className="font-spacegotesk dark:text-white">Search User Profiles</DialogTitle>
             <DialogDescription>
               <div className="w-full mt-2">
                 <Input
@@ -75,15 +80,15 @@ const SearchComponent: React.FC = () => {
                   value={query}
                   onChange={(e) => {
                     setQuery(e.target.value);
-                  }}
-                />
+                  }}>
+                  </Input>
                 {showResults && (
                   <div className="w-full mt-2 font-spacegotesk">
                     {results.map((post) => (
-                    <a href={`/profile/${post.id}`}>
+                    <a href={`/profile/${post.id}`} className="dark:bg-dark-box">
                       <div
                         key={post.id}
-                        className="mb-2 p-2 border rounded bg-white flex gap-3 items-center w-full"
+                        className="mb-2 p-2 border border-slate-600 rounded bg-white flex gap-3 items-center w-full dark:bg-dark-box"
                       >
                         <div>
                           <img

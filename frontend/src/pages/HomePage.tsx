@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div className="w-full">
       <Navbar />
-      <div className="flex  justify-center bg-[#f5f7f7] w-full dark:bg-[#212c3c] h-auto">
+      <div className="flex  justify-center bg-[#f5f7f7] w-full dark:bg-[#212c3c] h-auto min-h-screen">
         <div className=" w-full flex justify-center">
           <Tabs defaultValue="account" className="w-full mt-4">
             <div className="flex justify-center">

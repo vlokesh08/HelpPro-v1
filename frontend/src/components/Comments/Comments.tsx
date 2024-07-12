@@ -165,7 +165,7 @@ const Comments: React.FC = () => {
   }
 
   return (
-    <div className="App">
+    <div className="App animate-fadeIn dark:animate-fadeInDark ease-linear">
       <h1>Comments</h1>
       <div className="flex gap-3 my-3">
         <Input

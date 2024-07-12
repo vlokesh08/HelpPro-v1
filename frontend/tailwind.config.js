@@ -23,6 +23,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'custom-gradient': 'linear-gradient(90deg, rgba(104,98,195,1) 0%, rgba(104,104,193,1) 6%, rgba(0,212,255,1) 100%)',
+        'searchBG' : 'url("/images/searchBG.jpg")',
       },
       colors: {
         "def": "#f5f7f7",
@@ -41,10 +42,26 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        fadeIn: {
+          '0%': { opacity: 0, backgroundColor: '#f5f7f7' },
+          '50%':{ opacity: 0.5, backgroundColor: '#f5f7f7'},
+          '100%': { opacity: 1, backgroundColor: '#f5f7f7' },
+        },
+        fadeInDark: {
+          '0%': { opacity: 0, backgroundColor: '#212c3c' },
+          '50%':{ opacity: 0.5, backgroundColor: '#212c3c'},
+          '100%': { opacity: 1, backgroundColor: '#212c3c' },
+        },
+        slideIn: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fadeIn": 'fadeIn 0.3s ease-in',
+        slideIn: 'slideIn 0.5s ease-in-out',
       },
     },
   },

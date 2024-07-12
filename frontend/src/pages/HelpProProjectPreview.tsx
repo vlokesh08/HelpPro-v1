@@ -126,7 +126,7 @@ const HelpProProjectPreview: React.FC = () => {
     <div>
       <Navbar />
       <Toaster />
-      <div className="lg:px-[20rem] mx-auto p-4 font-spacegotesk bg-light-body dark:bg-dark-body dark:text-white h-auto">
+      <div className="animate-fadeIn dark:animate-fadeInDark lg:px-[20rem] mx-auto p-4 font-spacegotesk bg-light-body dark:bg-dark-body dark:text-white h-auto min-h-screen">
         <div>
           <AuthorDetails userDetails={userDetails} />
         </div>

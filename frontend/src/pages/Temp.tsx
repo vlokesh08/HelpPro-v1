@@ -92,21 +92,21 @@ const Temp: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-[#212c3c] dark:text-white font-spacegotesk">
+    <div className="min-h-screen bg-gray-100 dark:bg-[#212c3c] dark:text-white font-spacegotesk animate-fadeIn dark:animate-fadeInDark">
       <header className="bg-cover bg-center h-40 bg-blue-400">
         <div className="container mx-auto p-6 flex justify-between items-center"></div>
       </header>
 
       <div className="container mx-auto p-6 w-full">
         <div className="flex flex-col md:flex-row md:items-start md:space-x-6 w-full">
-          <div className="absolute top-[150px] left-[70px] lg:left-[150px] w-[120px] h-[120px] lg:w-[150px] lg:h-[150px]">
+          <div className="absolute top-[150px] left-[70px] lg:left-[150px] w-[120px] h-[120px] lg:w-[150px] lg:h-[150px] bg-cover">
             <img
               src={
                 userData.profilePic ||
                 "https://avatars.githubusercontent.com/u/124599?v=4"
               }
               alt="Profile"
-              className="rounded-full border-4 border-white"
+              className="rounded-full border-4 border-white bg-cover w-[150px] h-[150px]"
             />
           </div>
           <div className="flex pr-20 pl-20 md:flex-row flex-col justify-between w-full">

@@ -172,7 +172,7 @@ const Post: React.FC = () => {
     <div>
       <Navbar />
       <Toaster />
-      <div className="lg:px-[20rem] mx-auto p-4 font-spacegotesk bg-light-body dark:bg-dark-body dark:text-white">
+      <div className="animate-fadeIn dark:animate-fadeInDark lg:px-[20rem] mx-auto p-4 font-spacegotesk bg-light-body dark:bg-dark-body dark:text-white min-h-screen">
         {post ? (
           <div className="flex flex-col gap-5">
             <div className="flex justify-between items-center">

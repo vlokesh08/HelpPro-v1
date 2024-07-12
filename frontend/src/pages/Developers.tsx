@@ -4,7 +4,7 @@ const Developers = () => {
   return (
     <div>
         <Navigation />
-        <div className="flex flex-col h-auto dark:bg-dark-body dark:text-white font-spacegotesk">
+        <div className="flex flex-col h-auto dark:bg-dark-body dark:text-white font-spacegotesk min-h-screen">
             <div className="mt-12">
                 <h1 className="text-4xl font-bold text-center"><span className="text-button-clr">Developers</span> Page</h1>
             </div>
