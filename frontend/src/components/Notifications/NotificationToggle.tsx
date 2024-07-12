@@ -50,14 +50,12 @@ const NotificationItem = ({ notification }: { notification: any }) => {
 };
 
 export default function NotificationToggle() {
-  const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const getNotifications = async () => {
     console.log("Fetching notifications...")
     try {
-      setLoading(true);
       const response = await axios.get(
         `${BACKEND_URL}/api/v1/notifications/get-notifications`,
         {
@@ -70,9 +68,7 @@ export default function NotificationToggle() {
       setNotifications(response.data);
     } catch (error) {
       console.error("Error fetching notifications:", error);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   useEffect(() => {

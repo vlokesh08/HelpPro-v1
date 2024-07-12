@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import axios from "axios";
-import { Search, SearchIcon } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
