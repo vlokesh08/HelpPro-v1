@@ -22,6 +22,7 @@ import ThemeToggle from "../ThemeToggle";
 import { useNavigate } from "react-router-dom";
 import NotificationToggle from "../Notifications/NotificationToggle";
 import SearchComponent from "./Search";
+import MessageIcon from "./MessageIcon";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -72,6 +73,7 @@ const Navbar = () => {
               </nav>
             </div>
             <div className="hidden  justify-end pr-16 sm:flex lg:pr-0">
+              <MessageIcon />
               <SearchComponent />
               <NotificationToggle />
               <ThemeToggle />

@@ -52,8 +52,8 @@ const HelpPro: React.FC = () => {
                     >
                       <SearchBox />
                     </DialogTrigger>
-                    <DialogContent className="border-none w-3/4 bg-dark-body">
-                      <DialogHeader className="bg-dark-body">
+                    <DialogContent className="border-none w-3/4 bg-searchBG1 bg-cover">
+                      <DialogHeader className="">
                         <DialogTitle className="dark:text-white mb-5">
                           Search
                         </DialogTitle>

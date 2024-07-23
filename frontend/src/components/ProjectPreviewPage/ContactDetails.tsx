@@ -2,6 +2,18 @@ import axios from "axios";
 import { useEffect } from "react";
 import React from "react";
 import { Github, Linkedin } from "lucide-react";
+import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import useMessageRequests from "@/hooks/messageRequest";
+import { toast } from "sonner";
+
 interface ContactDetailsProps {
   githubLink: string;
   linkedinLink: string;
@@ -10,6 +22,25 @@ interface ContactDetailsProps {
 
 const ContactDetails = ({ id }: { id: string }) => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const token = localStorage.getItem("token");
+  const {
+    sendRequest,
+  } = useMessageRequests(token as string);
+  const user = localStorage.getItem("user") || "{}";
+  const userId = JSON.parse(user).id;
+
+
+  const handleSendRequest = async () => {
+    try {
+      await sendRequest(userId, id);
+    } catch (error : any) {
+      console.log(error.response?.data?.message);
+      if(error.response?.data?.message=="pending") {
+        toast.error("Request already sent");
+        return;
+      }
+    }
+  };
   const [contactDetails, setContactDetails] =
     React.useState<ContactDetailsProps>({} as ContactDetailsProps);
   useEffect(() => {
@@ -63,6 +94,29 @@ const ContactDetails = ({ id }: { id: string }) => {
             </a>
           </div>
         )}
+
+        <div>
+          <Dialog>
+            <DialogTrigger>
+              <Button>Message</Button>
+            </DialogTrigger>
+            <DialogContent className="w-1/2">
+              <DialogHeader>
+                <DialogTitle>Send a Message Request?</DialogTitle>
+                <DialogDescription>
+                  <div>
+                    <p>
+                      Send a message request to the user to connect with them.
+                    </p>
+                    <div className="w-full flex justify-end">
+                      <Button onClick={handleSendRequest}>Send Request</Button>
+                    </div>
+                  </div>
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
     </div>
   );

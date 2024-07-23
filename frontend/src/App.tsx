@@ -10,10 +10,11 @@ import HelpProNewProject from './pages/HelpProNewProject';
 import HelpProProjectPreview from './pages/HelpProProjectPreview';
 import SettingsPage from './pages/SettingsPage';
 import PrivateRoute from './PrivateRoute';
-import LoadingPage from './pages/LoadingPage';
 import Developers from './pages/Developers';
-import HomeScreenLoading from './components/LoadingPages/HomeScreenLoading';
 import MobileWarn from './components/MobileWarn';
+import Features from './components/LandingPage/Features';
+import ChatPage from './pages/ChatPage';
+import Feedback from './components/LandingPage/Feedback';
 
 function App() {
   return (
@@ -23,8 +24,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/developers" element={<Developers />} />
-        <Route path="/lala" element={<LoadingPage />} />
-        <Route path="/yoyo" element={<HomeScreenLoading />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/feedback" element={<Feedback />} />
+
 
         <Route
           path="/"

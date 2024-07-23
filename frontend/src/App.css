@@ -34,3 +34,15 @@
 .read-the-docs {
   color: #888;
 }
+
+.react-quill-no-border .ql-container {
+  border: none !important;
+}
+
+.react-quill-no-border .ql-toolbar {
+  border: none !important;
+}
+
+.react-quill-no-border .ql-editor {
+  border: none !important;
+}
