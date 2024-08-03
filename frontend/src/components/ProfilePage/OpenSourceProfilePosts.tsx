@@ -77,20 +77,20 @@ const OpenSourceProfilePosts = ({ userId }: { userId: string }) => {
       {posts.map((post: any) => (
         <div
           key={post.id}
-          className="bg-white dark:bg-[#283445] dark:text-white rounded-lg shadow-lg p-4 my-3 "
+          className="bg-white dark:bg-[#283445] dark:text-white rounded-lg border border-slate-300 hover:border-button-clr p-4 my-3 "
         >
           <h2 className="text-xl font-semibold">{post.title}</h2>
-          <p className="text-gray-500">{post.description}</p>
-          <p className="text-gray-500">TechStack: {post.techstack}</p>
-          <p className="text-gray-500">Bounty: {post.bounty ? "Yes" : "No"}</p>
-          <p className="text-gray-500">Bounty Value: {post.bountyValue}</p>
-          <p className="text-gray-500">Currency: {post.currency}</p>
-          <p className="text-gray-500">End Date: {post.endDate}</p>
-          <p className="text-gray-500">
-            Link:{" "}
-            <a href={post.link} target="_blank" rel="noreferrer">
-              {post.link}
-            </a>
+          <p className="text-gray-500 my-3">{post.description}</p>
+          <p className=" overflow-hidden">
+            TechStack:{" "}
+            {post?.techstack.split(",").map((tech : any, index : any) => (
+              <span
+                key={index}
+                className="bg-gray-200 mx-1 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm font-medium px-2.5 py-1 rounded"
+              >
+                {tech}
+              </span>
+            ))}
           </p>
         </div>
       ))}

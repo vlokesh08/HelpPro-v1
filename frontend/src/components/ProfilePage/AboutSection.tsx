@@ -81,7 +81,9 @@ const AboutSection = ({ about, userId }: {
         <h4 className="text-lg text-gray-400">{about}</h4>
       ) : (
         <div>
-          <Dialog>
+          {
+            userId === loggedinUser ? (
+              <Dialog>
             <DialogTrigger>
               <Button variant={"primary"} className="mb-5">Add Bio</Button>{" "}
             </DialogTrigger>
@@ -97,6 +99,11 @@ const AboutSection = ({ about, userId }: {
               </DialogHeader>
             </DialogContent>
           </Dialog>
+            ) : (
+              <h4 className="text-lg text-gray-400 my-3">No Bio Added</h4>
+            )
+          }
+          
         </div>
       )}
     </div>

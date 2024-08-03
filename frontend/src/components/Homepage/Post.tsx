@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import edit from "@/utils/DescriptionEditor";
 
 interface PostProps {
   title: string;
@@ -65,7 +66,8 @@ const Post = ({ title, description, bounty, author, techstack, profile }: PostPr
         <CardContent>
           <div>
           <h1 className="text-lg font-bold">{title}</h1>
-          {description.slice(0,50)+" ..."}
+          <div dangerouslySetInnerHTML={{__html : edit(description.slice(0,50))}}></div>
+
           </div>
         </CardContent>
         <CardFooter>

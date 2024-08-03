@@ -35,14 +35,36 @@
   color: #888;
 }
 
-.react-quill-no-border .ql-container {
+.ql-toolbar {
+  background-color: #d7d7d7; /* Light mode toolbar background */
+  color: #ffffff;  /* Light mode toolbar text color */
+  
+}
+
+/* Dark mode styles */
+.dark-mode .ql-toolbar {
+  background-color: #333333; /* Dark mode toolbar background */
+  color: #ffffff; /* Dark mode toolbar text color */
+}
+
+.dark-mode .ql-toolbar .ql-picker-item, 
+.dark-mode .ql-toolbar .ql-picker-label {
+  color: #ffffff; /* Dark mode picker items color */
+}
+
+.ql-container {
   border: none !important;
 }
 
-.react-quill-no-border .ql-toolbar {
+/* Remove border from the React Quill toolbar */
+.ql-toolbar {
   border: none !important;
+  border-radius: 10px
 }
-
-.react-quill-no-border .ql-editor {
-  border: none !important;
+.Editor {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 16px;
+  min-height: 300px;
+  text-align: left;
 }

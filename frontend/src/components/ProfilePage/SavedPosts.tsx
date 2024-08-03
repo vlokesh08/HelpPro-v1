@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import MiniPosts from "../LoadingPages/MiniPosts";
-import { Link } from "react-router-dom";
 const SavedPosts = ( {userId } : {userId : string}) => {
     const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
     const [loading, setLoading] = useState(false);
@@ -37,18 +36,18 @@ const SavedPosts = ( {userId } : {userId : string}) => {
                         post.isPost ? (
                             <div>
                                 <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Opensource</span>
-                                <Link to={`project/${post.project.id}`}>
-                                    <h1 className="text-lg font-semibold">{post.post.title}</h1>
+                                <a href={`project/${post.project.id}`} className="my-5">
+                                    <h1 className="text-lg font-semibold my-5">{post.post.title}</h1>
                                     <h3>{post.post.description}</h3>
-                                </Link>
+                                </a>
                             </div>
                         ) : (
                             <div>
                                 <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Project</span>
-                                <Link to={`project/${post.project.id}`}>
+                                <a href={`project/${post.project.id}`} className="my-5">
                                     <h1 className="text-lg font-semibold">{post.project.title}</h1>
                                     <h3>{post.project.description}</h3>
-                                </Link>
+                                </a>
                             </div>
                         )
                     }

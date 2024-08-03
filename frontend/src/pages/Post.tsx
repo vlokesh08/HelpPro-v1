@@ -221,7 +221,7 @@ const Post: React.FC = () => {
                         Edit
                       </Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className="w-3/4 h-3/4">
                       <EditPost />
                     </DialogContent>
                   </Dialog>
@@ -299,7 +299,9 @@ const Post: React.FC = () => {
               <h2 className="font-semibold text-lg">Issues</h2>
               {
                 issuesLoading ? (
-                  <IssuesLoading />
+                  <div className="container">
+                    <IssuesLoading />
+                  </div>
                 ) : (
                   issues.length > 0 ? (
                     <ul>

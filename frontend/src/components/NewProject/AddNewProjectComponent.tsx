@@ -74,12 +74,11 @@ const AddNewProjectComponent = () => {
       <Toaster />
       <div className="flex flex-col gap-5 ">
         <div className="font-spacegotesks">
-          <h2 className="text-2xl font-semibold leading-7 font-spacegotesks dark:text-white text-gray-900">
+          <h2 className="text-4xl font-semibold leading-7 font-spacegotesks dark:text-white text-gray-900">
             Add New Project
           </h2>
           <p className="mt-1 text-sm  font-spacegotesks leading-6 text-gray-600">
-            This information will be displayed publicly so be careful what you
-            share.
+            Make sure to fill all the fields
           </p>
         </div>
         <div className="">

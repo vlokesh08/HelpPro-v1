@@ -1,16 +1,14 @@
-import ReactQuill from "react-quill"
-
+import { useEffect, useState } from 'react';
+import  edit  from '../../../utils/DescriptionEditor';
 const DescriptionPreview = ({description} : {description : any}) => {
+  const [data, setData] = useState("");
+  useEffect(() => {
+    setData(edit(description));
+  }, [description]);
+
   return (
     <div className="w-full">
-        <ReactQuill
-        value={description}
-        placeholder="Write something..."
-        readOnly={true}
-        modules={{ toolbar: false }}
-        className="rounded-lg dark:text-white dark:bg-dark-body"
-        theme={'bubble'}
-      />
+        <div dangerouslySetInnerHTML={{ __html : data}} className="w-full"></div>
     </div>
   )
 }

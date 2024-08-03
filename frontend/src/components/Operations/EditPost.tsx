@@ -7,6 +7,7 @@ import MultiSelect from '../NewProject/MultiSelect';
 import { Button } from '../ui/button';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface Post {
   id: string;
@@ -74,43 +75,45 @@ const EditPost = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Post</h1>
-      <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">Title</h2>
-        <Input
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">Description</h2>
-        <Textarea
-          placeholder="Type your message here."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">Do you include bounty in this Project?</h2>
-        <BountyCheck isChecked={isChecked} setIsChecked={setIsChecked} />
-      </div>
-      <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">TechStack</h2>
-        <MultiSelect techStack={techStack} settechStack={setTechStack} />
-      </div>
-      <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">Github Link</h2>
-        <Input
-          placeholder="Add link of your Github repository"
-          value={githubLink}
-          onChange={(e) => setGithubLink(e.target.value)}
-        />
-      </div>
-      <div className="my-2 flex justify-end">
-        <Button onClick={handleEdit}>Edit Post</Button>
-      </div>
+    <div className="container mx-auto p-4 h-full flex flex-col dark:text-white">
+      <ScrollArea className="flex-grow rounded-md border p-4 overflow-auto">
+        <h1 className="text-2xl font-bold mb-4">Edit Post</h1>
+        <div className="mb-4">
+          <h2 className="mb-2 text-sm font-medium leading-6 dark:text-white text-gray-900">Title</h2>
+          <Input
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <h2 className="mb-2 text-sm font-medium leading-6 dark:text-white text-gray-900">Description</h2>
+          <Textarea
+            placeholder="Type your message here."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <h2 className="mb-2 text-sm font-medium leading-6 dark:text-white text-gray-900">Do you include bounty in this Project?</h2>
+          <BountyCheck isChecked={isChecked} setIsChecked={setIsChecked} />
+        </div>
+        <div className="mb-4">
+          <h2 className="mb-2 text-sm font-medium leading-6 dark:text-white text-gray-900">TechStack</h2>
+          <MultiSelect techStack={techStack} settechStack={setTechStack} />
+        </div>
+        <div className="mb-4">
+          <h2 className="mb-2 text-sm font-medium leading-6  dark:text-white text-gray-900">Github Link</h2>
+          <Input
+            placeholder="Add link of your Github repository"
+            value={githubLink}
+            onChange={(e) => setGithubLink(e.target.value)}
+          />
+        </div>
+        <div className="my-2 flex justify-end">
+          <Button onClick={handleEdit}>Edit Post</Button>
+        </div>
+      </ScrollArea>
     </div>
   );
 };

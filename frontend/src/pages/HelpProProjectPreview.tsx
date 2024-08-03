@@ -14,6 +14,7 @@ import Comments from "@/components/Comments/Comments";
 import SavePost from "@/components/SavePost";
 import DeleteProject from "@/components/Operations/DeleteProject";
 import EditProject from "@/components/Operations/EditProject";
+import edit from "@/utils/DescriptionEditor";
 interface Post {
   id: string;
   title: string;
@@ -217,7 +218,7 @@ const HelpProProjectPreview: React.FC = () => {
             </div>
 
             <div className="">
-              <p className="text-lg w-full text-justify">{post.description}</p>
+              <div dangerouslySetInnerHTML={{ __html: edit(post.description) }} />
             </div>
             <div className="flex justify-between">
               <div>

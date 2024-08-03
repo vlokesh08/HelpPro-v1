@@ -5,6 +5,7 @@ import { CircleUserRound, CircleFadingPlus, Trash } from 'lucide-react';
 import ProfileSection from "@/components/Settings/ProfileSection";
 import SocalMediaProfiles from "@/components/Settings/SocalMediaProfiles";
 import { Toaster } from "sonner";
+import DeleteAccount from "@/components/Settings/DeleteAccount";
 
 const SettingsPage = () => {
   const [selected, setSelected] = React.useState("profile");
@@ -49,7 +50,7 @@ const SettingsPage = () => {
             <SocalMediaProfiles />
           )}
           {selected === "delete" && (
-            <div>Delete Account Section</div>
+            <DeleteAccount />
           )}
         </div>
       </div>

@@ -8,9 +8,9 @@ import MultiSelect from "../MultiSelect";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
 import DatePicker from "./DatePicker";
-import Description from "./Description";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DescriptionPreview from "./DescriptionPreview";
+import MarkdownEditor from "@/pages/DescriptionEditor";
 
 const AddHelpProProject = () => {
   const [title, setTitle] = useState("");
@@ -89,13 +89,13 @@ const AddHelpProProject = () => {
     <div className="lg:px-[12rem] min-h-screen mx-auto p-4 dark:bg-[#212c3c] dark:text-white font-spacegotesk">
       <Toaster />
       <div>
-        <h2 className="text-5xl font-semibold leading-7 dark:text-white text-gray-900 mb-10 mt-5">
+        <h2 className="text-5xl font-semibold leading-7 dark:text-white text-gray-900 mb-5 mt-5">
           Add New Project
         </h2>
-        {/* <p className="mt-1 text-sm leading-6 text-gray-600">
-            This information will be displayed publicly so be careful what you
-            share.
-          </p> */}
+        <p className="mt-1 text-sm leading-6 text-gray-600 mb-10">
+          Fill in the details to add a new project
+          </p>
+          
       </div>
       <div className="flex gap-5 w-full">
         <div className="flex flex-col gap-5 w-full">
@@ -163,16 +163,22 @@ const AddHelpProProject = () => {
             </h2>
             <DatePicker date={endDate} setEndDate={setEndDate} />
           </div>
-
         </div>
-        <div className="w-full">
+        <div className="w-full bg-slate-500 dark:bg-slate-700 p-5 rounded-xl">
           <Tabs defaultValue="account" className="w-full">
             <TabsList>
               <TabsTrigger value="account">Description</TabsTrigger>
               <TabsTrigger value="password">Preview</TabsTrigger>
             </TabsList>
             <TabsContent value="account">
-              <Description description={description} setDescription={setDescription} />
+              {/* <Description
+                description={description}
+                setDescription={setDescription}
+              /> */}
+              <MarkdownEditor 
+                description={description}
+                setDescription={setDescription}
+              />
             </TabsContent>
             <TabsContent value="password">
               <DescriptionPreview description={description} />
@@ -180,19 +186,19 @@ const AddHelpProProject = () => {
           </Tabs>
         </div>
       </div>
-      <div className="w-full flex justify-end gap-3">
-            <Button
-              className="bg-primary text-black border"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              Cancel
-            </Button>
-            <Button variant={"primary"} onClick={handleSubmit}>
-              Submit
-            </Button>
-          </div>
+      <div className="w-full flex justify-end gap-3 my-8">
+        <Button
+          className="bg-primary text-black border"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Cancel
+        </Button>
+        <Button variant={"primary"} onClick={handleSubmit}>
+          Submit
+        </Button>
+      </div>
     </div>
   );
 };

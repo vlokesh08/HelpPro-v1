@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "../ui/button";
 
 const parseGitHubUrl = (url: string) => {
   const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)/;
@@ -125,23 +126,23 @@ const Issues: React.FC<IssuesProps> = ({ link }) => {
         </ul>
       )}
       <div className="flex justify-between mt-4">
-        <button
+        <Button
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
           className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 disabled:opacity-50"
         >
           Previous
-        </button>
+        </Button>
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button
+        <Button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
           className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 disabled:opacity-50"
         >
           Next
-        </button>
+        </Button>
       </div>
     </div>
   );

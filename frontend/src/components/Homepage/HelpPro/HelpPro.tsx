@@ -98,7 +98,7 @@ const HelpPro: React.FC = () => {
                     <h1 className="font-semibold text-5xl font-spacegotesk">
                       Hello
                     </h1>
-                    <h1 className="font-semibold font-spacegotesk text-5xl text-[#3a86ff] text-justify">
+                    <h1 className="font-semibold font-spacegotesk text-5xl text-[#3a86ff]">
                       {name}!
                     </h1>
                     <p className="text-justify mt-5 font-spacegotesk">
