@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -7,7 +7,9 @@ import CommentList from "./CommentList";
 import { Comment, Reply } from "./Interfaces";
 import MiniPosts from "../LoadingPages/MiniPosts";
 
-const Comments: React.FC = () => {
+const Comments = ({postAuthor} : {
+  postAuthor: string
+}) => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const { id } = useParams<{ id: string }>();
   const [comments, setComments] = useState<Comment[]>([]);
@@ -26,7 +28,13 @@ const Comments: React.FC = () => {
     try {
       setLoading(true); 
       const response = await axios.get<Comment[]>(
-        `${BACKEND_URL}/api/v1/comments/post/${postId}/comments`
+        `${BACKEND_URL}/api/v1/comments/post/${postId}/comments`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          }
       );
       setComments(response.data);
       setLoading(false);
@@ -44,6 +52,13 @@ const Comments: React.FC = () => {
           content: newComment,
           projectId: postId,
           authorId: userId,
+          postAuthor: postAuthor
+        }, 
+        {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
         }
       );
       setComments([...comments, response.data]);
@@ -61,7 +76,13 @@ const Comments: React.FC = () => {
         `${BACKEND_URL}/api/v1/comments/edit-comment/${commentId}`,
         {
           content: editedComment,
-        }
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          }
       );
 
       setComments(
@@ -77,7 +98,13 @@ const Comments: React.FC = () => {
   const handleDeleteComment = async (commentId: string) => {
     try {
       await axios.delete(
-        `${BACKEND_URL}/api/v1/comments/delete-comment/${commentId}`
+        `${BACKEND_URL}/api/v1/comments/delete-comment/${commentId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          }
       );
       setComments(comments.filter((comment) => comment.id !== commentId));
     } catch (error) {
@@ -93,7 +120,13 @@ const Comments: React.FC = () => {
           content: replyContent,
           commentId,
           authorId: userId,
-        }
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          }
       );
       console.log(response.data);
       setComments(

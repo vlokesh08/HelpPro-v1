@@ -15,6 +15,7 @@ import SavePost from "@/components/SavePost";
 import DeleteProject from "@/components/Operations/DeleteProject";
 import EditProject from "@/components/Operations/EditProject";
 import edit from "@/utils/DescriptionEditor";
+import CurrencyConverter from "@/utils/CurrencyConverter";
 interface Post {
   id: string;
   title: string;
@@ -24,8 +25,10 @@ interface Post {
   techstack: string;
   link: string;
   bounty: boolean;
+  currency : string;
   bountyValue: string;
   author: {
+    id:string;
     name: string;
     username: string;
     profilePic: string;
@@ -72,6 +75,7 @@ const HelpProProjectPreview: React.FC = () => {
   const [techStack, setTechStack] = useState<string[]>([]);
   const user: string = localStorage.getItem("user") || "{}";
   const user_id = JSON.parse(user).id;
+  const [currency, setCurrency] = useState<string>("");
 
 
   useEffect(() => {
@@ -94,6 +98,11 @@ const HelpProProjectPreview: React.FC = () => {
           avatar: res.data.post.author.profilePic,
           verified : res.data.post.author.verified,
         };
+
+        // update currency by their symbol
+        if(res.data.post.bountyValue){
+          setCurrency(CurrencyConverter(res.data.post.currency));
+        }
         setUserDetails(user);
         setTechStack(res.data.post.techstack.split(","));
       } catch (e) {
@@ -224,7 +233,7 @@ const HelpProProjectPreview: React.FC = () => {
               <div>
                 {post.bountyValue && (
                   <p className="text-lg font-semibold">
-                    Bounty: ${post.bountyValue}
+                    Bounty: {currency + " " + post.bountyValue}
                   </p>
                 )}
               </div>
@@ -272,7 +281,7 @@ const HelpProProjectPreview: React.FC = () => {
               />
             </div>
             <div className="mt-4">
-              <Comments />
+              <Comments postAuthor={post.author.id} />
             </div>
           </div>
         ) : (
