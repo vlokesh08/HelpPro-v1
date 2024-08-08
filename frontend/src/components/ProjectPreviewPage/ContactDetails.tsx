@@ -58,7 +58,7 @@ const ContactDetails = ({ id }: { id: string }) => {
   }, []);
 
   return (
-    <div className="font-spacegotesk  dark:bg-dark-body">
+    <div className="font-spacegotesk  dark:bg-dark-body dark:text-white">
       <h1 className="p-3 font-bold text-lg">Contact Details</h1>
       <div className="flex flex-col gap-3 mt-4 bg-light-body rounded-lg p-4">
         {contactDetails.githubLink && (
@@ -98,7 +98,7 @@ const ContactDetails = ({ id }: { id: string }) => {
         <div>
           <Dialog>
             <DialogTrigger>
-              <Button>Message</Button>
+              <Button className="dark:bg-slate-800 dark:text-white">Message</Button>
             </DialogTrigger>
             <DialogContent className="w-1/2">
               <DialogHeader>

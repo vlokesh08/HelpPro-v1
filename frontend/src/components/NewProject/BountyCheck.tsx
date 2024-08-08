@@ -25,14 +25,14 @@ const BountyCheck = ({
         />
         <span
           className={`flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${
-            !isChecked ? 'text-black bg-[#f4f7ff]' : 'text-body-color'
+            isChecked ? 'text-black bg-[#f4f7ff]' : 'text-body-color'
           }`}
         >
           Bounty
         </span>
         <span
           className={`flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${
-            isChecked ? 'text-black bg-[#f4f7ff]' : 'text-body-color'
+            !isChecked ? 'text-black bg-[#f4f7ff]' : 'text-body-color'
           }`}
         >
 

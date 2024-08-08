@@ -52,7 +52,7 @@ const AboutSection = ({ about, userId }: {
   }
 
   return (
-    <div>
+    <div className="font-spacegotesk">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">Bio</h2>
         {
@@ -61,11 +61,11 @@ const AboutSection = ({ about, userId }: {
               <DialogTrigger>
               <Button variant={"primary"} className="h-8 w-12"><Pencil width={18} /></Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="w-1/2">
                 <DialogHeader>
                   <DialogTitle className="dark:text-white">Add Your Bio</DialogTitle>
-                  <DialogDescription>
-                    <Textarea className="mt-5" id="name" value={input} onChange={(e)=>{setInput(e.target.value)}} placeholder="Bio" />
+                  <DialogDescription >
+                    <Textarea className="mt-5 min-h-[180px]" id="name" value={input} onChange={(e)=>{setInput(e.target.value)}} placeholder="Bio" />
                       <div className="w-full flex justify-end">
                         <Button variant={"primary"} className="mt-5" onClick={handleSave}>Save</Button>
                       </div>
@@ -80,7 +80,7 @@ const AboutSection = ({ about, userId }: {
       {about ? (
         <h4 className="text-lg text-gray-400">{about}</h4>
       ) : (
-        <div>
+        <div className="font-spacegotesk">
           {
             userId === loggedinUser ? (
               <Dialog>

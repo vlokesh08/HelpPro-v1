@@ -231,7 +231,7 @@ const HelpProProjectPreview: React.FC = () => {
             </div>
             <div className="flex justify-between">
               <div>
-                {post.bountyValue && (
+                {post?.bounty && post?.bountyValue && (
                   <p className="text-lg font-semibold">
                     Bounty: {currency + " " + post.bountyValue}
                   </p>

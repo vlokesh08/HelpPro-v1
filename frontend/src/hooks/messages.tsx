@@ -2,58 +2,54 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { socket } from '@/socket/SocketInstance';
 import { Message } from '@/types';
+
 const useMessages = () => {
-  const [messages, setMessages] = useState<any>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
   const SockerURL = import.meta.env.VITE_SOCKET_URL;
 
-
-
-  const editMessage = async (id : string, content:string) => {
+  const editMessage = async (id: string, content: string) => {
     try {
       const response = await axios.put(`${SockerURL}/${id}`, { content });
-      setMessages((prevMessages : any) =>
-        prevMessages.map((msg: any) => (msg.id === id ? response.data : msg))
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) => (msg.id === id ? response.data : msg))
       );
-    } catch (err:any) {
+    } catch (err: any) {
       setError(err);
     }
   };
 
-  const deleteMessage = async (id:string) => {
+  const deleteMessage = async (id: string) => {
     try {
       setLoading(true);
       await axios.delete(`${SockerURL}/${id}`);
-      setMessages((prevMessages : any) => prevMessages.filter((msg:any) => msg.id !== id));
-    } catch (err:any) {
+      setMessages((prevMessages) => prevMessages.filter((msg) => msg.id !== id));
+    } catch (err: any) {
       setError(err);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
 
-  const fetchMessages = async () => {
-    socket.on("receive-message", (message: Message) => {
-        console.log("Receive Message")
-      setMessages((prevMessages : any) => [...prevMessages, message]);
+  const fetchMessages = () => {
+    socket.emit('load-messages');
+
+    socket.on('receive-message', (message: Message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
     });
 
-    socket.on("load-messages", (messages: Message[]) => {
-        console.log("Loading Message", messages)
+    socket.on('load-messages', (messages: Message[]) => {
       setMessages(messages);
     });
-
-};  
+  };
 
   useEffect(() => {
-    
     fetchMessages();
 
     return () => {
-      socket.off("receive-message");
-      socket.off("load-messages");
+      socket.off('receive-message');
+      socket.off('load-messages');
     };
   }, []);
 
@@ -61,9 +57,9 @@ const useMessages = () => {
     messages,
     loading,
     error,
-    fetchMessages,
     editMessage,
     deleteMessage,
+    fetchMessages,
     setMessages,
   };
 };

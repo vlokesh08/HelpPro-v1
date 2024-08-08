@@ -2,7 +2,9 @@ import { Button } from '../ui/button'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useNavigate } from 'react-router-dom'
 const DeleteProject = () => {
+    const navigate = useNavigate()
     const { id } = useParams<{ id: string }>()
     const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
     const handleDelete = async () => {
@@ -13,6 +15,7 @@ const DeleteProject = () => {
             },
         })
         toast.success('Post deleted successfully')
+        navigate('/')
         } catch (e) {   
         console.error(e)
         toast.error('Failed to delete post')

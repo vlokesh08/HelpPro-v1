@@ -52,19 +52,16 @@ const NotificationItem = ({ notification }: { notification: any }) => {
 export default function NotificationToggle() {
   const [notifications, setNotifications] = useState([]);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const user = localStorage.getItem("user") || "{}";
+  const userId = JSON.parse(user).id;
 
   const getNotifications = async () => {
     console.log("Fetching notifications...")
     try {
       const response = await axios.get(
-        `${BACKEND_URL}/api/v1/notifications/get-notifications`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        `${BACKEND_URL}/api/v1/notifications/get-notifications/${userId}`
       );
-      console.log("Notifications:", response.data);
+      // console.log("Notifications:", response.data);
       setNotifications(response.data);
     } catch (error) {
       console.error("Error fetching notifications:", error);

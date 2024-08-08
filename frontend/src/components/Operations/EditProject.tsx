@@ -9,6 +9,8 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import MiniPosts from '../LoadingPages/MiniPosts';
+import { set } from 'date-fns';
+import MarkdownEditor from '@/pages/DescriptionEditor';
 
 
 interface Post {
@@ -18,13 +20,15 @@ interface Post {
   bounty: boolean;
   techstack: string;
   link: string;
+  bountyValue: string;
 }
 
 const EditProject = () => {
   const { id } = useParams<{ id: string }>();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState();
+  const [bountyValue, setBountyValue] = useState("");
   const [techStack, setTechStack] = useState<string>("");
   const [githubLink, setGithubLink] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,10 +46,11 @@ const EditProject = () => {
             },
           }
         );
-        const { title, description, bounty, techstack, link } = res.data.post;
+        const { title, description, bounty, techstack, link, bountyValue } = res.data.post;
         setTitle(title);
         setDescription(description);
-        setIsChecked(!bounty);
+        setIsChecked(bounty);
+        setBountyValue(bountyValue);
         setTechStack(techstack);
         setGithubLink(link);
         setLoading(false);
@@ -65,9 +70,10 @@ const EditProject = () => {
         {
           title,
           description,
-          bounty: !isChecked,
+          bounty: isChecked,
           techstack: techStack,
           link: githubLink,
+          bountyValue: bountyValue,
         },
         {
           headers: {
@@ -88,35 +94,49 @@ const EditProject = () => {
   }
 
   return (
-    <ScrollArea className="h-full w-full">
-    <div className="container p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Post</h1>
+    <ScrollArea className="h-full w-full dark:text-white">
+    <div className="container p-4 dark:text-white">
+      <h1 className="text-2xl font-bold mb-4 dark:text-white">Edit Post</h1>
       <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">Title</h2>
+        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900 dark:text-white">Title</h2>
         <Input
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
-      <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">Description</h2>
-        <Textarea
+      <div className="mb-4 dark:text-white">
+        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900 dark:text-white">Description</h2>
+        {/* <Textarea
           placeholder="Type your message here."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-        />
+        /> */}
+        <MarkdownEditor description={description} setDescription={setDescription} />
       </div>
       <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">Do you include bounty in this Project?</h2>
+        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900 dark:text-white">Do you include bounty in this Project?</h2>
+        <div className="flex gap-3">
         <BountyCheck isChecked={isChecked} setIsChecked={setIsChecked} />
+        {
+          isChecked && (
+            <Input
+              placeholder="Add bounty value"
+              value={bountyValue}
+              className="w-1/4"
+              onChange={(e) => setBountyValue(e.target.value)}
+            />
+          )
+        }
+        </div>
+
       </div>
       <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">TechStack</h2>
+        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900 dark:text-white">TechStack</h2>
         <MultiSelect techStack={techStack} settechStack={setTechStack} />
       </div>
       <div className="mb-4">
-        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900">Github Link</h2>
+        <h2 className="mb-2 text-sm font-medium leading-6 text-gray-900 dark:text-white">Github Link</h2>
         <Input
           placeholder="Add link of your Github repository"
           value={githubLink}

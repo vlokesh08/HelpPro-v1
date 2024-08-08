@@ -18,11 +18,11 @@ const ChatPageUi = () => {
     const [clicked, setClicked] = useState(true);
   return (
     <div className="w-full h-[calc(100vh-58px)] dark:text-white dark:bg-dark-body">
-      <ResizablePanelGroup direction="horizontal" className="h-full w-full">
+      <ResizablePanelGroup direction="horizontal" className="h-full w-full" >
         <ResizablePanel minSize={25} maxSize={25}>
             <ChatUsers clicked={clicked} setClicked={setClicked} />
         </ResizablePanel>
-        <ResizableHandle />
+        <ResizableHandle  />
         <ResizablePanel minSize={75} maxSize={75}>
             {
                 clicked ? (

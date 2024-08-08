@@ -88,6 +88,10 @@ const useMessageRequests = (jwtToken : string) => {
     }
   };
 
+  // see if already sent request
+
+  
+
   return {
     loading,
     error,

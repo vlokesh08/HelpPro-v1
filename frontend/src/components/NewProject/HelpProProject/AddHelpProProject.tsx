@@ -15,7 +15,7 @@ import MarkdownEditor from "@/pages/DescriptionEditor";
 const AddHelpProProject = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
   const [githubLink, setGithubLink] = useState("");
   const [techStack, setTechStack] = useState("");
   const [bountyValue, setBountyValue] = useState("0");
@@ -111,25 +111,13 @@ const AddHelpProProject = () => {
               }}
             />
           </div>
-          {/* <div>
-            <h2 className="mb-2 block text-sm font-medium leading-6 dark:text-white text-gray-900">
-              Description
-            </h2>
-            <Textarea
-              placeholder="Type your message here."
-              value={description}
-              onChange={(e) => {
-                setDescription(e.target.value);
-              }}
-            />
-          </div> */}
           <div className="">
             <h2 className="mb-2 block text-sm font-medium leading-6 dark:text-white text-gray-900">
               Do you include bounty in this Project?
             </h2>
             <div className="flex gap-5">
               <BountyCheck isChecked={isChecked} setIsChecked={setIsChecked} />
-              {isChecked === false && (
+              {isChecked === true && (
                 <BountyValue
                   bountyValue={bountyValue}
                   setBountyValue={setBountyValue}
