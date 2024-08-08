@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Input } from '../ui/input';
-import { Textarea } from '../ui/textarea';
 import BountyCheck from '../NewProject/BountyCheck';
 import MultiSelect from '../NewProject/MultiSelect';
 import { Button } from '../ui/button';
@@ -9,7 +8,6 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import MiniPosts from '../LoadingPages/MiniPosts';
-import { set } from 'date-fns';
 import MarkdownEditor from '@/pages/DescriptionEditor';
 
 
@@ -27,7 +25,7 @@ const EditProject = () => {
   const { id } = useParams<{ id: string }>();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [isChecked, setIsChecked] = useState();
+  const [isChecked, setIsChecked] = useState(false);
   const [bountyValue, setBountyValue] = useState("");
   const [techStack, setTechStack] = useState<string>("");
   const [githubLink, setGithubLink] = useState("");
